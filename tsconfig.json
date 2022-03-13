@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "outDir": "dist",
+    "allowJs": true,
     "sourceMap": true
   },
   "exclude": ["node_modules", "**/*.spec.ts"]
