@@ -33,6 +33,10 @@ const makeSut = (): {
 };
 
 describe("DbCreateTransaction UseCase", () => {
+  afterAll(() => {
+    jest.restoreAllMocks();
+    jest.resetAllMocks();
+  });
   const spyRandomUUID = jest
     .spyOn(crypto, "randomUUID")
     .mockReturnValue("any_randomUUID");
