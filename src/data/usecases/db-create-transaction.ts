@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { TransactionModel } from "src/domain/models/transaction";
 import {
   CreateTransaction,
@@ -8,7 +9,11 @@ import { CreateTransactionRepository } from "../protocols/db/create-transaction-
 export class DbCreateTransaction implements CreateTransaction {
   constructor(private readonly repository: CreateTransactionRepository) {}
   async create(transaction: CreateTransactionModel): Promise<TransactionModel> {
-    await this.repository.create(transaction);
-    return null as any;
+    const id = crypto.randomUUID();
+    return await this.repository.create({
+      ...transaction,
+      _id: id,
+      status: "active",
+    });
   }
 }
