@@ -10,8 +10,8 @@ export class DbFindTransactionByFilters implements FindTransactionByFilters {
     private readonly repository: FindTransactionByFiltersRepository
   ) {}
   async find(
-    transaction: TransactionFiltersModel
+    transactionFilter: TransactionFiltersModel
   ): Promise<TransactionModel[]> {
-    return await this.repository.find(transaction);
+    return await this.repository.find(transactionFilter);
   }
 }
