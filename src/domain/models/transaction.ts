@@ -7,6 +7,6 @@ export interface TransactionModel {
   amount: string;
   type: TransactionTypeModel;
   title: string;
-  description: string;
+  description?: string;
   status: TransactionStatusModel;
 }
