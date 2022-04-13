@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  description: Open API Definition for cash manager app
+  version: "1.0.0"
+  title: Cash Manager app
+  contact:
+    email: fran.p.s@hotmail.com
+tags:
+  - name: transactions
+    description: The transactions EPs
+  - name: total amount
+    description: The total amount EPs
+
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /transactions:
+    get:
+      tags:
+        - transactions
+      summary: Get the transactions list
+      operationId: getTransactions
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    amount:
+                      type: string
+                    type:
+                      type: string
+                      enum:
+                        - "Receipt"
+                        - "Payment"
+                    title:
+                      type: string
+                    status:
+                      type: string
+                      enum:
+                        - "active"
+                        - "reverted"
+                    description:
+                      type: string
+                  required:
+                    - "_id"
+                    - "amount"
+                    - "type"
+                    - "title"
+                    - "status"
+    post:
+      tags:
+        - transactions
+      summary: Create a new transactions
+      operationId: postTransactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                    - "Receipt"
+                    - "Payment"
+                title:
+                  type: string
+                description:
+                  type: string
+              required:
+                - "amount"
+                - "type"
+                - "title"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  amount:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                      - "Receipt"
+                      - "Payment"
+                  title:
+                    type: string
+                  status:
+                    type: string
+                    enum:
+                      - "active"
+                      - "reverted"
+                  description:
+                    type: string
+                required:
+                  - "_id"
+                  - "amount"
+                  - "type"
+                  - "title"
+                  - "status"
+  /transactions/{_id}:
+    delete:
+      tags:
+        - transactions
+      summary: Revert a transaction
+      operationId: deleteTransactions
+      parameters:
+        - in: path
+          name: _id
+          schema:
+            type: string
+          required: true
+      responses:
+        "201":
+          description: Success
+  /amount:
+    get:
+      tags:
+        - total amount
+      summary: Get total amount
+      operationId: getAmount
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: string
+                required:
+                  - "amount"
