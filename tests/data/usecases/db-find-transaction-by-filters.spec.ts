@@ -30,7 +30,7 @@ const makeSut = (): {
     }): Promise<TransactionModel[]> {
       return Promise.resolve([
         {
-          _id: "any_randomUUID",
+          _id: "1-2-3-4-5",
           amount: "any_amount",
           type: "Payment",
           title: "any_title",
@@ -82,7 +82,7 @@ describe("DbFindTransactionByFilters UseCase", () => {
 
     expect(newTransaction).toEqual([
       {
-        _id: "any_randomUUID",
+        _id: "1-2-3-4-5",
         amount: "any_amount",
         type: "Payment",
         title: "any_title",

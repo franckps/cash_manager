@@ -39,7 +39,7 @@ describe("DbCreateTransaction UseCase", () => {
   });
   const spyRandomUUID = jest
     .spyOn(crypto, "randomUUID")
-    .mockReturnValue("any_randomUUID");
+    .mockReturnValue("1-2-3-4-5");
   test("Should call the crypto randomUUID method to generate an unique id", async () => {
     const { sut } = makeSut();
     await sut.create(makeTransactionData());
@@ -52,7 +52,7 @@ describe("DbCreateTransaction UseCase", () => {
     await sut.create(makeTransactionData());
 
     expect(createSpy).toHaveBeenCalledWith({
-      _id: "any_randomUUID",
+      _id: "1-2-3-4-5",
       amount: "any_amount",
       type: "Payment",
       title: "any_title",
@@ -75,7 +75,7 @@ describe("DbCreateTransaction UseCase", () => {
     const newTransaction = await sut.create(makeTransactionData());
 
     expect(newTransaction).toEqual({
-      _id: "any_randomUUID",
+      _id: "1-2-3-4-5",
       amount: "any_amount",
       type: "Payment",
       title: "any_title",

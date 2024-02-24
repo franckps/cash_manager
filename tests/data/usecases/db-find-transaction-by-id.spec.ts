@@ -12,7 +12,7 @@ const makeSut = (): {
     constructor() {}
     findById(_id: string): Promise<TransactionModel> {
       return Promise.resolve({
-        _id: "any_randomUUID",
+        _id: "1-2-3-4-5",
         amount: "any_amount",
         type: "Payment",
         title: "any_title",
@@ -55,7 +55,7 @@ describe("DbFindTransactionById UseCase", () => {
     const newTransaction = await sut.findById("any_id");
 
     expect(newTransaction).toEqual({
-      _id: "any_randomUUID",
+      _id: "1-2-3-4-5",
       amount: "any_amount",
       type: "Payment",
       title: "any_title",
