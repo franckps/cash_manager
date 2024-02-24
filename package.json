@@ -1,11 +1,11 @@
 {
   "engines" : {
-    "node" : ">=16.13.0 =<18.16.0"
+    "node" : ">=16.13.0 =<20.11.1"
   },
   "scripts": {
     "build": "npx tsc",
     "dev": "npx ts-node-dev src/index.ts",
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/src/index.js",
     "start-container": "npm run build && docker-compose up",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --watch --runInBand",
