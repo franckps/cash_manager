@@ -92,4 +92,17 @@ export class TransactionRepository
       }
     );
   }
+
+  async get(): Promise<{ amount: number }> {
+    const [receiptAmount, paymentAmount] = await Promise.all([
+      this.transaction.sum("amount", {
+        where: { status: "active", type: "Receipt" },
+      }),
+      this.transaction.sum("amount", {
+        where: { status: "active", type: "Payment" },
+      }),
+    ]);
+
+    return { amount: receiptAmount - paymentAmount };
+  }
 }
