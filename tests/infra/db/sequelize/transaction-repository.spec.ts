@@ -34,6 +34,10 @@ interface Transaction {
       };
     }
   ): Promise<{ dataValues: TransactionModel }>;
+  sum(
+    property: string,
+    filter: { where: { status: string; type: string } }
+  ): Promise<number>;
 }
 
 interface SutTypes {
@@ -74,6 +78,13 @@ const makeTransactionStub = () => {
       model: TransactionModel
     ): Promise<{ dataValues: TransactionModel }> {
       return Promise.resolve({ dataValues: transactionModel });
+    }
+
+    async sum(
+      property: string,
+      filter: { where: { status: string; type: string } }
+    ): Promise<number> {
+      return Promise.resolve(1);
     }
   }
 
@@ -192,6 +203,22 @@ describe("Sequelize TransactionRepository", () => {
           },
         }
       );
+    });
+  });
+
+  describe("#get", () => {
+    test("should call Transaction.sum correctly", async () => {
+      const { sut, transactionStub } = makeSut();
+      const updateSpy = jest.spyOn(transactionStub, "sum");
+      const { amount } = await sut.get();
+
+      expect(updateSpy).toBeCalledWith("amount", {
+        where: { status: "active", type: "Receipt" },
+      });
+      expect(updateSpy).toHaveBeenLastCalledWith("amount", {
+        where: { status: "active", type: "Payment" },
+      });
+      expect(amount).toEqual(0);
     });
   });
 });
