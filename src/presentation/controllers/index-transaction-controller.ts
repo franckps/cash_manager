@@ -7,8 +7,9 @@ export class FindTransactionByFiltersController implements Controller {
     private readonly findTransactionByFilters: FindTransactionByFilters
   ) {}
   async handle(request: HttpRequest): Promise<HttpResponse> {
+    console.log({ query: request.query });
     const transactionList = await this.findTransactionByFilters.find(
-      request.params
+      request.query
     );
     return {
       statusCode: 200,
