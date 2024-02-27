@@ -3,7 +3,7 @@ import { TransactionModel } from "src/domain/models/transaction";
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "path/to/database.sqlite",
+  storage: "database/database.sqlite",
 });
 
 export const Transaction: ModelDefined<TransactionModel, TransactionModel> =
