@@ -12,3 +12,9 @@ export const buildCreateTransactionController = () => {
     new DbCreateTransaction(transactionRepository)
   );
 };
+
+export const buildFindTransactionByFiltersController = () => {
+  return new FindTransactionByFiltersController(
+    new DbFindTransactionByFilters(transactionRepository)
+  );
+};
