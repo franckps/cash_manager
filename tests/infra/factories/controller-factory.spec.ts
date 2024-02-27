@@ -4,6 +4,7 @@ import {
 } from "../../../src/infra/factories/controller-factory";
 import { CreateTransactionController } from "../../../src/presentation/controllers/create-transaction-controller";
 import { FindTransactionByFiltersController } from "../../../src/presentation/controllers/index-transaction-controller";
+import { GetTotalAmountController } from "../../../src/presentation/controllers/get-total-amount-controller";
 
 describe("Controller Factory", () => {
   afterAll(() => {
@@ -19,5 +20,10 @@ describe("Controller Factory", () => {
   test("#buildFindTransactionByFiltersController", () => {
     const controller = buildFindTransactionByFiltersController();
     expect(controller).toBeInstanceOf(FindTransactionByFiltersController);
+  });
+
+  test("#buildGetTotalAmountController", () => {
+    const controller = buildGetTotalAmountController();
+    expect(controller).toBeInstanceOf(GetTotalAmountController);
   });
 });
