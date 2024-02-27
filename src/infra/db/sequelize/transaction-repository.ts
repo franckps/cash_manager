@@ -1,4 +1,4 @@
-import { ModelDefined, Op } from "sequelize";
+import { Filterable, ModelDefined, Op, WhereOptions } from "sequelize";
 import { CreateTransactionRepository } from "src/data/protocols/db/create-transaction-repository";
 import { FindTransactionByFiltersRepository } from "src/data/protocols/db/find-transaction-by-filters-repository";
 import { FindTransactionByIdRepository } from "src/data/protocols/db/find-transaction-by-id-repository";
@@ -38,13 +38,15 @@ export class TransactionRepository
   }
 
   async find(filters: TransactionFiltersModel): Promise<TransactionModel[]> {
+    let where: WhereOptions<TransactionModel> = {};
+    console.log({ filters });
+    if (!!filters.amount) where["amount"] = { [Op.between]: filters.amount };
+    if (!!filters.type) where["type"] = filters.type;
+    if (!!filters.title) where["title"] = { [Op.or]: filters.title };
+    if (!!filters.status) where["status"] = filters.status;
+    console.log(JSON.stringify(where, null, 1));
     const result = await this.transaction.findAll({
-      where: {
-        amount: { [Op.between]: filters.amount },
-        type: filters.type,
-        title: { [Op.or]: filters.title },
-        status: filters.status,
-      },
+      where,
     });
 
     if (!result.at(0)) return [] as TransactionModel[];
