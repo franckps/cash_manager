@@ -11,7 +11,7 @@ module.exports = {
         primaryKey: true,
       },
       amount: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.DOUBLE,
         allowNull: false,
       },
       type: {

@@ -15,7 +15,7 @@ export const Transaction: ModelDefined<TransactionModel, TransactionModel> =
       primaryKey: true,
     },
     amount: {
-      type: DataTypes.STRING,
+      type: DataTypes.DOUBLE,
       allowNull: false,
     },
     type: {
