@@ -1,15 +1,22 @@
 import express from "express";
+import { buildCreateTransactionController } from "./infra/factories/controller-factory";
 
 console.log(`PORT: (${process.env.PORT})`);
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const API_BASE_RESOURCE = "/api/v1";
+
+const createTransactionController = buildCreateTransactionController();
 
 const app = express();
 
-app.get("/", (_, res) => {
-  res.send("Hello world!");
+app.use(express.json());
+
+app.post(API_BASE_RESOURCE + "/", async (request, response) => {
+  const result = await createTransactionController.handle(request);
+  return response.json(result);
 });
 
-app.listen(port, () => {
-  console.log(`App is listening on ${port}`);
+app.listen(PORT, () => {
+  console.log(`App is listening on ${PORT}`);
 });
