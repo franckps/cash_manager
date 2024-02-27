@@ -6,14 +6,14 @@ import { TransactionModel } from "../../src/domain/models/transaction";
 import { FindTransactionByFiltersController } from "../../src/presentation/controllers/index-transaction-controller";
 
 const makeTransactionRequest = (): {
-  params: {
+  query: {
     amount: string;
     type: "Receipt" | "Payment";
     title: string;
     status: "active" | "reverted";
   };
 } => ({
-  params: {
+  query: {
     amount: "any_amount",
     type: "Payment",
     title: "any_title",
@@ -56,13 +56,10 @@ describe("FindTransactionByFilters", () => {
   });
   test("Should call FindTransactionByFiltersController with the correct values", async () => {
     const { sut, findTransactionByFiltersControllerStub } = makeSut();
-    const createSpy = jest.spyOn(
-      findTransactionByFiltersControllerStub,
-      "find"
-    );
+    const findSpy = jest.spyOn(findTransactionByFiltersControllerStub, "find");
     await sut.handle(makeTransactionRequest());
 
-    expect(createSpy).toHaveBeenCalledWith({
+    expect(findSpy).toHaveBeenCalledWith({
       amount: "any_amount",
       type: "Payment",
       title: "any_title",
