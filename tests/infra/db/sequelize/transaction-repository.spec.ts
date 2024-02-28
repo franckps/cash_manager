@@ -218,7 +218,7 @@ describe("Sequelize TransactionRepository", () => {
       expect(updateSpy).toHaveBeenLastCalledWith("amount", {
         where: { status: "active", type: "Payment" },
       });
-      expect(amount).toEqual(0);
+      expect(amount).toEqual("0");
     });
   });
 });

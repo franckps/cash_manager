@@ -1,6 +1,7 @@
 import {
   buildCreateTransactionController,
   buildFindTransactionByFiltersController,
+  buildGetTotalAmountController,
 } from "../../../src/infra/factories/controller-factory";
 import { CreateTransactionController } from "../../../src/presentation/controllers/create-transaction-controller";
 import { FindTransactionByFiltersController } from "../../../src/presentation/controllers/index-transaction-controller";
