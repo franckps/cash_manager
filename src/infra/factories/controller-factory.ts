@@ -8,6 +8,8 @@ import { DbGetTotalAmount } from "../../data/usecases/db-get-total-amount";
 import { GetTotalAmountController } from "../../presentation/controllers/get-total-amount-controller";
 import { DbRevertTransaction } from "../../data/usecases/db-revert-transaction";
 import { RevertTransactionController } from "../../presentation/controllers/revert-transaction-controller";
+import { FindTransactionByIdController } from "../../presentation/controllers/find-transaction-by-id-controller";
+import { DbFindTransactionById } from "../../data/usecases/db-find-transaction-by-id";
 
 const transactionRepository = new TransactionRepository(Transaction);
 
@@ -32,5 +34,11 @@ export const buildGetTotalAmountController = () => {
 export const buildRevertTransactionController = () => {
   return new RevertTransactionController(
     new DbRevertTransaction(transactionRepository)
+  );
+};
+
+export const buildFindTransactionByIdController = () => {
+  return new FindTransactionByIdController(
+    new DbFindTransactionById(transactionRepository)
   );
 };
