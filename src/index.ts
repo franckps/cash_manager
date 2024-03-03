@@ -4,6 +4,7 @@ import {
   buildFindTransactionByFiltersController,
   buildGetTotalAmountController,
   buildRevertTransactionController,
+  buildFindTransactionByIdController,
 } from "./infra/factories/controller-factory";
 
 console.log(`PORT: (${process.env.PORT})`);
@@ -16,6 +17,7 @@ const findTransactionByFiltersController =
   buildFindTransactionByFiltersController();
 const getTotalAmountController = buildGetTotalAmountController();
 const revertTransactionController = buildRevertTransactionController();
+const findTransactionByIdController = buildFindTransactionByIdController();
 
 const app = express();
 
@@ -33,6 +35,11 @@ app.get(API_BASE_RESOURCE + "/", async (request, response) => {
 
 app.get(API_BASE_RESOURCE + "/total", async (request, response) => {
   const result = await getTotalAmountController.handle(request);
+  return response.json(result);
+});
+
+app.get(API_BASE_RESOURCE + "/:id", async (request, response) => {
+  const result = await findTransactionByIdController.handle(request);
   return response.json(result);
 });
 
