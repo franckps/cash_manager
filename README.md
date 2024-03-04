@@ -47,3 +47,16 @@ And when the message above appear in your terminal, the server is up
 ```
 App is listening on 3000
 ```
+
+## Request cUrls:
+
+### Create new Transaction
+
+curl --location 'http://localhost:3000/api/v1/' \
+--header 'Content-Type: application/json' \
+--data '{
+"amount": "10",
+"type": "Receipt",
+"title": "Conta",
+"description": "Teste inicial"
+}'
