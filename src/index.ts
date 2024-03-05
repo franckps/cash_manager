@@ -6,6 +6,7 @@ import {
   buildRevertTransactionController,
   buildFindTransactionByIdController,
 } from "./infra/factories/controller-factory";
+import path from "path";
 
 console.log(`PORT: (${process.env.PORT})`);
 
@@ -20,6 +21,11 @@ const revertTransactionController = buildRevertTransactionController();
 const findTransactionByIdController = buildFindTransactionByIdController();
 
 const app = express();
+
+app.use(
+  "/web",
+  express.static(path.join(__dirname, "..", "assets", "public", "web"))
+);
 
 app.use(express.json());
 
