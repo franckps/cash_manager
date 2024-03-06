@@ -1,0 +1,105 @@
+html, body, * {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #656565;
+    background-color: #fff;
+}
+
+::placeholder {
+    color: #ccc;
+    opacity: 1;
+}
+::-ms-input-placeholder {
+    color: #ccc;
+}
+
+body {
+    background-color: rgba(220, 220, 220, .5)
+}
+
+header.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .4rem 2rem;
+    box-shadow: 0 0 7px #999;
+    font-weight: 600;
+}
+
+header.title button {
+    background-color: rgb(12, 156, 72);
+    padding: .4em 1em;
+    border-radius: 2rem;
+    color: #FFF;
+    font-weight: 600px;
+}
+header.title span {
+    font-size: 1.2em;
+    font-weight: 600px;
+    color: #FFF;
+}
+
+.transaction-list {
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.transaction-list .header .filter-field {
+    border: 2px solid #ddd;
+    padding: .7rem;
+    border-radius: 4px;
+    width: 40rem;
+}
+.transaction-list .header .filter-button {
+    padding: .7rem 1.5rem;
+    color: transparent;
+    border: 2px solid rgb(12, 156, 72);
+    border-radius: 0 4px 4px 0;
+    background-color: rgb(12, 156, 72);
+    margin: 0;
+    margin-left: -1rem;
+    margin-bottom: 1.5rem;
+}
+
+.transaction-list .header .header-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+}
+.transaction-list .header .header-columns p {
+    width: 15%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    color: #aaa;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.content .content-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    background-color: #ededed;
+    opacity: .8;
+}
+.content .content-item p {
+    width: 15%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    background-color: transparent;
+}
