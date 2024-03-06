@@ -17,8 +17,8 @@ html, body, * {
     color: #ccc;
 }
 
-body {
-    background-color: rgba(220, 220, 220, .5)
+html, body {
+    background-color: rgb(240, 240, 240)
 }
 
 header.title {
@@ -41,6 +41,7 @@ header.title span {
     font-size: 1.2em;
     font-weight: 600px;
     color: #FFF;
+    background-color: transparent;
 }
 
 .transaction-list {
@@ -76,30 +77,95 @@ header.title span {
     border-bottom: 1px solid #ccc;
 }
 .transaction-list .header .header-columns p {
+    display: flex;
+    gap: .5rem;
     width: 15%;
     overflow: hidden;
     white-space: nowrap;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     color: #aaa;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.transaction-list .header .header-columns p span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1rem;
+    color: #999;
+}
+
+.sort-buttons button {
+    color: #999;
+    font-size: .5rem;
+    background-color:transparent;
+    padding: 0;
+    transform: scale(1.2);
 }
 
 .content .content-item {
     position: relative;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
-    background-color: #ededed;
+    background-color: #f5f5f5;
     opacity: .8;
+}
+.content .content-item.reverted {
+    opacity: .3;
+}
+.content .content-item.reverted::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    top: 50%;
+    height: 2px;
+    background-color: #999
 }
 .content .content-item p {
     width: 15%;
     overflow: hidden;
     white-space: nowrap;
     text-align: center;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     background-color: transparent;
+}
+.content .content-item p .payment {
+    padding: .3rem .5rem;
+    border: 1px solid #f00;
+    border-radius: 4px;
+    background-color: #fdd;
+    color: #f00;
+}
+.content .content-item p .receipt {
+    padding: .3rem .5rem;
+    border: 1px solid #090;
+    border-radius: 4px;
+    background-color: #dfd;
+    color: #090;
+}
+.btn-revert {
+    border: 1px solid #b00;
+    background-color: #fbb;
+    color: #b00;
+    border-radius: 1rem;
+    padding: .2rem .5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+.btn-revert span {
+    display: inline-block;
+    color: #b00;
+    background-color: transparent;
+    transform: rotate(45deg) scale(1.3);
 }
