@@ -56,6 +56,10 @@ header.title span {
     padding: .7rem;
     border-radius: 4px;
     width: 40rem;
+    outline: none;
+}
+.transaction-list .header .filter-field:focus {
+    border-bottom-color: #aaa;
 }
 .transaction-list .header .filter-button {
     padding: .7rem 1.5rem;
@@ -66,6 +70,17 @@ header.title span {
     margin: 0;
     margin-left: -1rem;
     margin-bottom: 1.5rem;
+    cursor: pointer;
+    opacity: .98;
+    box-shadow: 0 0 5px #777;
+}
+.transaction-list .header .filter-button:hover {
+    opacity: .9;
+}
+.transaction-list .header .filter-button:active {
+    opacity: 1;
+    box-shadow: none;
+    transform: scale(.98);
 }
 
 .transaction-list .header .header-columns {
