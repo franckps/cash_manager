@@ -18,8 +18,18 @@ const transactionData = {
     }
 
     this.data.forEach((element) => {
-      const valoresJoined = Object.values(element).join(" ").toLowerCase();
+      let valoresJoined =
+        Object.values(element).join(" ") +
+        " " +
+        this.formatDate(element.createdAt) +
+        " " +
+        this.formatType(element.type) +
+        " " +
+        this.formatAmount(element.amount);
+
+      valoresJoined = valoresJoined.toLowerCase();
       const strFilter = this.filterString.toLowerCase();
+
       console.log({ strFilter });
       console.log({ valoresJoined });
       if (new RegExp(`.*${strFilter}.*`).test(valoresJoined))
@@ -35,9 +45,8 @@ const transactionData = {
       .join("");
     mainContent.innerHTML = itemsHTML;
   },
-  generateItemHTML: function (itemData) {
-    let dateString = itemData.createdAt.split(" +00:00")[0];
-    console.log();
+  formatDate: function (stringDate) {
+    let dateString = stringDate.split(" +00:00")[0];
     const datetime = new Date(dateString);
     console.log({ datetime });
     const [day, month, year, hour, minutes, secounds] = [
@@ -49,17 +58,26 @@ const transactionData = {
       datetime.getSeconds(),
     ];
 
+    return `${day}/${month + 1}/${year} ${hour}:${minutes}:${secounds}`;
+  },
+  formatType: function (type) {
+    return type == "Receipt" ? "ENTRADA" : "SAÍDA";
+  },
+  formatAmount: function (amount) {
+    return `R$ ${amount}`;
+  },
+  generateItemHTML: function (itemData) {
     return `
         <section class="content-item ${
           itemData.status == "reverted" ? "reverted" : ""
         }">
             <p>${itemData.title}</p>
-            <p><span class="${itemData.type.toLowerCase()}">${
-      itemData.type == "Receipt" ? "ENTRADA" : "SAÍDA"
-    }</span></p>
-            <p>${day}/${month + 1}/${year} ${hour}:${minutes}:${secounds}</p>
+            <p><span class="${itemData.type.toLowerCase()}">${this.formatType(
+      itemData.type
+    )}</span></p>
+            <p>${this.formatDate(itemData.createdAt)}</p>
             <p>${itemData.description}</p>
-            <p>R$ ${itemData.amount}</p>
+            <p>${this.formatAmount(itemData.amount)}</p>
             <p>
               ${
                 itemData.status == "active"
