@@ -7,6 +7,17 @@ const transactionData = {
     this.data = await this.fetchTransactions();
     this.filter();
   },
+  delete: async function (id) {
+    const confirmation = this.askConfirmation(
+      "Deseja realmente excluir essa transação?"
+    );
+    if (!confirmation) return;
+    this.data = await this.deleteTransaction(id);
+    await this.update();
+  },
+  askConfirmation: function (message) {
+    return confirm(message);
+  },
   filter: function () {
     this.updateFilterString();
 
@@ -79,7 +90,9 @@ const transactionData = {
             <p>
               ${
                 itemData.status == "active"
-                  ? "<button class='btn-revert'><span>⨁</span> Extornar</button>"
+                  ? "<button class='btn-revert' onclick='transactionData.delete(\"" +
+                    itemData._id +
+                    "\")' ><span>⨁</span> Extornar</button>"
                   : ""
               }
             </p>
@@ -92,6 +105,13 @@ const transactionData = {
   },
   fetchTransactions: async function () {
     const request = await fetch("/api/v1/");
+    const result = await request.json();
+    return result.body;
+  },
+  deleteTransaction: async function (id) {
+    const request = await fetch("/api/v1/" + id, {
+      method: "DELETE",
+    });
     const result = await request.json();
     return result.body;
   },
