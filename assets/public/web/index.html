@@ -9,7 +9,7 @@
 <body>
     <header class="title">
         <p>Transações</p>
-        <button><span>⨁</span> NOVA</button>
+        <button type="button" onclick="transactionData.openPopupCreateTransaction()"><span>⨁</span> NOVA</button>
     </header>
     <div class="transaction-list">
         <header class="header">
@@ -50,6 +50,41 @@
         </header>
         <main class="content" id="content"></main>
     </div>
+
+    <section id="popup-screen" class="popup-screen hidden">
+        <main class="popup-content">
+            <p class="popup-title">
+                Nova Transação
+                <button type="button" onclick="transactionData.closePopupCreateTransaction()">+</button>
+            </p>
+            <fieldset class="popup-main">
+                <form action="/api/v1/" method="post" id="transaction-form" onsubmit="return transactionData.create('transaction-form')">
+                        <p class="input-container">
+                            <label for="input-title">Nome</label>
+                            <input type="text" name="title" id="input-title">
+                        </p>
+                        <p class="input-container">
+                            <label for="input-type">Tipo</label>
+                            <select name="type" id="input-type">
+                                <option value="Receipt">ENTRADA</option>
+                                <option value="Payment">SAÍDA</option>
+                            </select>
+                        </p>
+                        <p class="input-container">
+                            <label for="input-amount">Valor</label>
+                            <input type="number" name="amount" id="input-amount">
+                        </p>
+                        <p class="input-container">
+                            <label for="input-description">Detalhes</label>
+                            <textarea name="description" id="input-description" cols="30" rows="10"></textarea>
+                        </p>
+                        <p class="buttons-area">
+                            <button type="submit">CRIAR</button>
+                        </p>
+                </form>
+            </fieldset>
+        </main>
+    </section>
 </body>
 <script src="js/script.js"></script>
 </html>

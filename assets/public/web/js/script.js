@@ -15,6 +15,24 @@ const transactionData = {
     this.data = await this.deleteTransaction(id);
     await this.update();
   },
+  create: function (formId) {
+    try {
+      const form = document.getElementById(formId);
+      const requestObject = {
+        type: form["input-type"].value,
+        amount: form["input-amount"].value,
+        title: form["input-title"].value,
+        description: form["input-description"].value,
+      };
+      this.createTransaction(requestObject).then(async () => {
+        await this.update();
+        this.closePopupCreateTransaction();
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    return false;
+  },
   askConfirmation: function (message) {
     return confirm(message);
   },
@@ -115,6 +133,17 @@ const transactionData = {
     const result = await request.json();
     return result.body;
   },
+  createTransaction: async function (transactionData) {
+    const request = await fetch("/api/v1/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(transactionData),
+    });
+    const result = await request.json();
+    return result.body;
+  },
   sort: function (column /** column name */, ref /** ASC | DES */ = "asc") {
     if (!!column) this.sortArray = [column, ref.toLowerCase()];
     if (!this.sortArray[0]) {
@@ -136,6 +165,14 @@ const transactionData = {
 
     this.data = aux;
     this.filter();
+  },
+  openPopupCreateTransaction: function () {
+    const popupScreen = document.getElementById("popup-screen");
+    popupScreen.classList.remove("hidden");
+  },
+  closePopupCreateTransaction: function () {
+    const popupScreen = document.getElementById("popup-screen");
+    popupScreen.classList.add("hidden");
   },
 };
 
