@@ -98,13 +98,17 @@ const transactionData = {
         <section class="content-item ${
           itemData.status == "reverted" ? "reverted" : ""
         }">
-            <p>${itemData.title}</p>
+            <p title="${itemData.title}">${itemData.title}</p>
             <p><span class="${itemData.type.toLowerCase()}">${this.formatType(
       itemData.type
     )}</span></p>
-            <p>${this.formatDate(itemData.createdAt)}</p>
-            <p>${itemData.description}</p>
-            <p>${this.formatAmount(itemData.amount)}</p>
+            <p title="${this.formatDate(itemData.createdAt)}">${this.formatDate(
+      itemData.createdAt
+    )}</p>
+            <p title="${itemData.description}">${itemData.description}</p>
+            <p title="${this.formatAmount(
+              itemData.amount
+            )}">${this.formatAmount(itemData.amount)}</p>
             <p>
               ${
                 itemData.status == "active"
