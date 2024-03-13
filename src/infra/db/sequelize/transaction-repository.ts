@@ -3,7 +3,10 @@ import { CreateTransactionRepository } from "src/data/protocols/db/create-transa
 import { FindTransactionByFiltersRepository } from "src/data/protocols/db/find-transaction-by-filters-repository";
 import { FindTransactionByIdRepository } from "src/data/protocols/db/find-transaction-by-id-repository";
 import { RevertTransactionRepository } from "src/data/protocols/db/revert-transaction-repository";
-import { TransactionModel } from "src/domain/models/transaction";
+import {
+  TransactionModel,
+  TransactionStatusModel,
+} from "src/domain/models/transaction";
 import { TransactionFiltersModel } from "src/domain/usecases/find-transaction-by-filters";
 
 export class TransactionRepository
@@ -55,8 +58,11 @@ export class TransactionRepository
   }
 
   async revert(_id: string): Promise<void> {
+    const result = await this.findById(_id);
+    let status = "reverted" as TransactionStatusModel;
+    if (result.status == "reverted") status = "active";
     await this.transaction.update(
-      { status: "reverted" },
+      { status },
       {
         where: {
           _id,
