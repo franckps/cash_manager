@@ -190,13 +190,52 @@ describe("Sequelize TransactionRepository", () => {
   });
 
   describe("#revert", () => {
-    test("should call Transaction.update correctly", async () => {
+    test("should call findById and Transaction.update correctly", async () => {
       const { sut, transactionStub } = makeSut();
+      const findByIdSpy = jest.spyOn(sut, "findById");
       const updateSpy = jest.spyOn(transactionStub, "update");
+      findByIdSpy.mockReturnValueOnce(
+        Promise.resolve({
+          _id: "1-1-1-1-1",
+          amount: "any_amount",
+          type: "Payment",
+          title: "any_title",
+          description: "any_description",
+          status: "active",
+        })
+      );
       await sut.revert("1-1-1-1-1");
 
+      expect(findByIdSpy).toBeCalledWith("1-1-1-1-1");
       expect(updateSpy).toBeCalledWith(
         { status: "reverted" },
+        {
+          where: {
+            _id: "1-1-1-1-1",
+          },
+        }
+      );
+    });
+
+    test("should call findById and Transaction.update correctly when already reverted", async () => {
+      const { sut, transactionStub } = makeSut();
+      const findByIdSpy = jest.spyOn(sut, "findById");
+      const updateSpy = jest.spyOn(transactionStub, "update");
+      findByIdSpy.mockReturnValueOnce(
+        Promise.resolve({
+          _id: "1-1-1-1-1",
+          amount: "any_amount",
+          type: "Payment",
+          title: "any_title",
+          description: "any_description",
+          status: "reverted",
+        })
+      );
+      await sut.revert("1-1-1-1-1");
+
+      expect(findByIdSpy).toBeCalledWith("1-1-1-1-1");
+      expect(updateSpy).toBeCalledWith(
+        { status: "active" },
         {
           where: {
             _id: "1-1-1-1-1",
