@@ -7,12 +7,12 @@ const transactionData = {
     this.data = await this.fetchTransactions();
     this.filter();
   },
-  delete: async function (id) {
+  revert: async function (id, action) {
     const confirmation = this.askConfirmation(
-      "Deseja realmente excluir essa transação?"
+      `Deseja realmente ${action ? action : "reverter"} essa transação?`
     );
     if (!confirmation) return;
-    this.data = await this.deleteTransaction(id);
+    this.data = await this.revertTransaction(id);
     await this.update();
   },
   create: function (formId) {
@@ -109,14 +109,14 @@ const transactionData = {
             <p title="${this.formatAmount(
               itemData.amount
             )}">${this.formatAmount(itemData.amount)}</p>
-            <p>
-              ${
-                itemData.status == "active"
-                  ? "<button class='btn-revert' onclick='transactionData.delete(\"" +
-                    itemData._id +
-                    "\")' ><span>⨁</span> Extornar</button>"
-                  : ""
-              }
+            <p class="btn-section">
+              <button class='btn-revert' onclick='transactionData.revert("${
+                itemData._id
+              }", "${itemData.status == "active" ? "extornar" : "restaurar"}")'>
+              <span>⨁</span> ${
+                itemData.status == "active" ? "Extornar" : "Restaurar"
+              }</button>
+              
             </p>
         </section>
     `;
@@ -130,9 +130,9 @@ const transactionData = {
     const result = await request.json();
     return result.body;
   },
-  deleteTransaction: async function (id) {
-    const request = await fetch("/api/v1/" + id, {
-      method: "DELETE",
+  revertTransaction: async function (id) {
+    const request = await fetch("/api/v1/" + id + "/revert", {
+      method: "PATCH",
     });
     const result = await request.json();
     return result.body;
