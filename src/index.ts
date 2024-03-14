@@ -49,7 +49,7 @@ app.get(API_BASE_RESOURCE + "/:id", async (request, response) => {
   return response.json(result);
 });
 
-app.delete(API_BASE_RESOURCE + "/:id", async (request, response) => {
+app.patch(API_BASE_RESOURCE + "/:id/revert", async (request, response) => {
   const result = await revertTransactionController.handle(request);
   return response.json(result);
 });
