@@ -187,6 +187,47 @@ describe("Sequelize TransactionRepository", () => {
 
       expect(result).toEqual([]);
     });
+
+    test("should not return deleted transactions case no status filter", async () => {
+      const filter: TransactionFiltersModel = {
+        amount: ["1", "3"],
+        type: "Receipt",
+        title: ["Salario", "Extra"],
+      };
+      const { sut, transactionStub } = makeSut();
+      const findAllSpy = jest.spyOn(transactionStub, "findAll");
+      await sut.find(filter);
+
+      expect(findAllSpy).toBeCalledWith({
+        where: {
+          amount: { [Op.between]: ["1", "3"] },
+          type: "Receipt",
+          title: { [Op.or]: ["Salario", "Extra"] },
+          status: { [Op.not]: "deleted" },
+        },
+      });
+    });
+
+    test("should not return deleted transactions even case status filter try", async () => {
+      const filter: TransactionFiltersModel = {
+        amount: ["1", "3"],
+        type: "Receipt",
+        title: ["Salario", "Extra"],
+        status: "deleted",
+      };
+      const { sut, transactionStub } = makeSut();
+      const findAllSpy = jest.spyOn(transactionStub, "findAll");
+      await sut.find(filter);
+
+      expect(findAllSpy).toBeCalledWith({
+        where: {
+          amount: { [Op.between]: ["1", "3"] },
+          type: "Receipt",
+          title: { [Op.or]: ["Salario", "Extra"] },
+          status: { [Op.not]: "deleted" },
+        },
+      });
+    });
   });
 
   describe("#revert", () => {
