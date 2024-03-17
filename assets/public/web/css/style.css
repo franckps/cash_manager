@@ -165,7 +165,7 @@ header.title span {
     background-color: #dfd;
     color: #090;
 }
-.btn-revert {
+.btn-revert, .btn-delete {
     border-radius: 1rem;
     padding: .2rem .5rem;
     font-size: 1rem;
@@ -174,12 +174,24 @@ header.title span {
     background-color: #fbb;
     color: #b00;
     cursor: pointer;
+    width: 1.9rem;
+    overflow: hidden;
+    opacity: .7;
+    transition: all ease-in-out .5s;
 }
-.btn-revert span {
+.btn-revert:hover, .btn-delete:hover {
+    opacity: 1;
+    width: 9rem;
+}
+.btn-revert span, .btn-delete span {
     display: inline-block;
     background-color: transparent;
     color: #b00;
     transform: rotate(45deg) scale(1.3);
+}
+.btn-delete, .btn-delete span {
+    background-color: #b00;
+    color: #fff;
 }
 .reverted .btn-revert {
     border: 1px solid #090;
@@ -188,7 +200,7 @@ header.title span {
 }
 .reverted .btn-revert span {
     color: #090;
-    transform: rotate(45deg) scale(1.3);
+    transform: rotate(0deg) scale(1.3);
 }
 
 .popup-screen.hidden {

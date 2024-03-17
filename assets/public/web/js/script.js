@@ -15,6 +15,14 @@ const transactionData = {
     this.data = await this.revertTransaction(id);
     await this.update();
   },
+  delete: async function (id) {
+    const confirmation = this.askConfirmation(
+      "Deseja realmente excluir permanentemente essa transação?"
+    );
+    if (!confirmation) return;
+    this.data = await this.deleteTransaction(id);
+    await this.update();
+  },
   create: function (formId) {
     try {
       const form = document.getElementById(formId);
@@ -116,7 +124,13 @@ const transactionData = {
               <span>⨁</span> ${
                 itemData.status == "active" ? "Extornar" : "Restaurar"
               }</button>
-              
+              ${
+                itemData.status == "active"
+                  ? ""
+                  : "<button class='btn-delete' onclick='transactionData.delete(\"" +
+                    itemData._id +
+                    "\")'><span>⨁</span> Excluir</button>"
+              }
             </p>
         </section>
     `;
@@ -133,6 +147,13 @@ const transactionData = {
   revertTransaction: async function (id) {
     const request = await fetch("/api/v1/" + id + "/revert", {
       method: "PATCH",
+    });
+    const result = await request.json();
+    return result.body;
+  },
+  deleteTransaction: async function (id) {
+    const request = await fetch("/api/v1/" + id, {
+      method: "DELETE",
     });
     const result = await request.json();
     return result.body;
