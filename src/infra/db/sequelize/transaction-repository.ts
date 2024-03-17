@@ -3,6 +3,7 @@ import { CreateTransactionRepository } from "src/data/protocols/db/create-transa
 import { FindTransactionByFiltersRepository } from "src/data/protocols/db/find-transaction-by-filters-repository";
 import { FindTransactionByIdRepository } from "src/data/protocols/db/find-transaction-by-id-repository";
 import { RevertTransactionRepository } from "src/data/protocols/db/revert-transaction-repository";
+import { DeleteTransactionRepository } from "src/data/protocols/db/delete-transaction-repository";
 import {
   TransactionModel,
   TransactionStatusModel,
@@ -14,7 +15,8 @@ export class TransactionRepository
     CreateTransactionRepository,
     FindTransactionByIdRepository,
     FindTransactionByFiltersRepository,
-    RevertTransactionRepository
+    RevertTransactionRepository,
+    DeleteTransactionRepository
 {
   constructor(
     private readonly transaction: ModelDefined<
@@ -82,5 +84,16 @@ export class TransactionRepository
     ]);
 
     return { amount: (receiptAmount - paymentAmount).toString() };
+  }
+
+  async delete(_id: string): Promise<void> {
+    await this.transaction.update(
+      { status: "deleted" },
+      {
+        where: {
+          _id,
+        },
+      }
+    );
   }
 }

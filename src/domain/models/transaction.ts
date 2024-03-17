@@ -1,6 +1,6 @@
 export type TransactionTypeModel = "Receipt" | "Payment";
 
-export type TransactionStatusModel = "active" | "reverted";
+export type TransactionStatusModel = "active" | "reverted" | "deleted";
 
 export interface TransactionModel {
   _id: string;
