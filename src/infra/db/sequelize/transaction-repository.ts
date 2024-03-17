@@ -48,7 +48,11 @@ export class TransactionRepository
     if (!!filters.amount) where["amount"] = { [Op.between]: filters.amount };
     if (!!filters.type) where["type"] = filters.type;
     if (!!filters.title) where["title"] = { [Op.or]: filters.title };
-    if (!!filters.status) where["status"] = filters.status;
+
+    where["status"] = { [Op.not]: "deleted" };
+    if (!!filters.status && filters.status != "deleted")
+      where["status"] = filters.status;
+
     console.log(JSON.stringify(where, null, 1));
     const result = await this.transaction.findAll({
       where,
