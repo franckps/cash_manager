@@ -5,6 +5,7 @@ import {
   buildGetTotalAmountController,
   buildRevertTransactionController,
   buildFindTransactionByIdController,
+  buildDeleteTransactionController,
 } from "./infra/factories/controller-factory";
 import path from "path";
 
@@ -19,6 +20,7 @@ const findTransactionByFiltersController =
 const getTotalAmountController = buildGetTotalAmountController();
 const revertTransactionController = buildRevertTransactionController();
 const findTransactionByIdController = buildFindTransactionByIdController();
+const deleteTransactionController = buildDeleteTransactionController();
 
 const app = express();
 
@@ -46,6 +48,11 @@ app.get(API_BASE_RESOURCE + "/total", async (request, response) => {
 
 app.get(API_BASE_RESOURCE + "/:id", async (request, response) => {
   const result = await findTransactionByIdController.handle(request);
+  return response.json(result);
+});
+
+app.delete(API_BASE_RESOURCE + "/:id", async (request, response) => {
+  const result = await deleteTransactionController.handle(request);
   return response.json(result);
 });
 
