@@ -260,4 +260,21 @@ describe("Sequelize TransactionRepository", () => {
       expect(amount).toEqual("0");
     });
   });
+
+  describe("#delete", () => {
+    test("should call Transaction.update correctly", async () => {
+      const { sut, transactionStub } = makeSut();
+      const updateSpy = jest.spyOn(transactionStub, "update");
+      await sut.delete("1-1-1-1-1");
+
+      expect(updateSpy).toBeCalledWith(
+        { status: "deleted" },
+        {
+          where: {
+            _id: "1-1-1-1-1",
+          },
+        }
+      );
+    });
+  });
 });
