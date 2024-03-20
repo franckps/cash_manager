@@ -1,6 +1,10 @@
-import { CreateTransaction } from "../../src/domain/usecases/create-transaction";
+import {
+  CreateTransaction,
+  CreateTransactionModel,
+} from "../../src/domain/usecases/create-transaction";
 import { TransactionModel } from "../../src/domain/models/transaction";
 import { CreateTransactionController } from "../../src/presentation/controllers/create-transaction-controller";
+import { Validator } from "../../src/presentation/protocols/validator";
 
 const makeTransactionRequest = (): {
   body: {
@@ -21,6 +25,7 @@ const makeTransactionRequest = (): {
 const makeSut = (): {
   sut: CreateTransactionController;
   createTransactionStub: CreateTransaction;
+  validatorStub: Validator<CreateTransactionModel>;
 } => {
   class CreateTransactionStub implements CreateTransaction {
     constructor() {}
@@ -35,10 +40,19 @@ const makeSut = (): {
       });
     }
   }
-  const createTransactionStub = new CreateTransactionStub();
-  const sut = new CreateTransactionController(createTransactionStub);
 
-  return { sut, createTransactionStub };
+  class ValidatorStub implements Validator<CreateTransactionModel> {
+    validate(data: CreateTransactionModel): void {}
+  }
+
+  const createTransactionStub = new CreateTransactionStub();
+  const validatorStub = new ValidatorStub();
+  const sut = new CreateTransactionController(
+    createTransactionStub,
+    validatorStub
+  );
+
+  return { sut, createTransactionStub, validatorStub };
 };
 
 describe("CreateTransactionController", () => {
@@ -63,6 +77,15 @@ describe("CreateTransactionController", () => {
     jest
       .spyOn(createTransactionStub, "create")
       .mockRejectedValue(new Error("any_error"));
+    const promiseRejected = sut.handle(makeTransactionRequest());
+
+    await expect(promiseRejected).rejects.toThrow(new Error("any_error"));
+  });
+  test("Should throw if Validator throws", async () => {
+    const { sut, validatorStub } = makeSut();
+    jest.spyOn(validatorStub, "validate").mockImplementation(() => {
+      throw new Error("any_error");
+    });
     const promiseRejected = sut.handle(makeTransactionRequest());
 
     await expect(promiseRejected).rejects.toThrow(new Error("any_error"));
