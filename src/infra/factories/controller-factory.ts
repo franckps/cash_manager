@@ -12,12 +12,15 @@ import { RevertTransactionController } from "../../presentation/controllers/reve
 import { DeleteTransactionController } from "../../presentation/controllers/delete-transaction-controller";
 import { FindTransactionByIdController } from "../../presentation/controllers/find-transaction-by-id-controller";
 import { DbFindTransactionById } from "../../data/usecases/db-find-transaction-by-id";
+import { CreateTransactionValidator } from "../../utils/validators";
 
 const transactionRepository = new TransactionRepository(Transaction);
+const createTransactionValidator = new CreateTransactionValidator();
 
 export const buildCreateTransactionController = () => {
   return new CreateTransactionController(
-    new DbCreateTransaction(transactionRepository)
+    new DbCreateTransaction(transactionRepository),
+    createTransactionValidator
   );
 };
 
