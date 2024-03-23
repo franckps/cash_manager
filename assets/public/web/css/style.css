@@ -128,6 +128,7 @@ header.title span {
     display: flex;
     flex-direction: row;
     align-items: center;
+    overflow: visible;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
     background-color: rgba(245, 245, 245, 1);
@@ -144,6 +145,7 @@ header.title span {
 }
 .content .content-item p {
     width: 15%;
+    position: relative;
     overflow: hidden;
     white-space: nowrap;
     text-align: center;
@@ -165,42 +167,60 @@ header.title span {
     background-color: #dfd;
     color: #090;
 }
+.btn-section {
+    display: inline-flex;
+    flex-direction: column;
+    height: 5rem;
+}
+.btn-section.hidden > button {
+    display: hidden;
+    display: none;
+}
+.btn-section.hidden::after {
+    content: "...";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    color: #000;
+    font-size: 1.5rem;
+    transform: rotate(90deg);
+}
+
 .btn-revert, .btn-delete {
-    border-radius: 1rem;
     padding: .2rem .5rem;
     font-size: 1rem;
     text-transform: uppercase;
-    border: 1px solid #b00;
-    background-color: #fbb;
-    color: #b00;
     cursor: pointer;
-    width: 1.9rem;
-    overflow: hidden;
+    border: 1px solid #ccc;
+    text-align: left;
     opacity: .7;
-    transition: all ease-in-out .5s;
 }
-.btn-revert:hover, .btn-delete:hover {
-    opacity: 1;
-    width: 9rem;
+.reverted .btn-revert:hover {
+    background-color: #9d9;
+    color: #090;
+    transform: scale(1.3);
+}
+.reverted .btn-revert:hover span {
+    color: #090;
+}
+.reverted .btn-revert span {
+    transform: rotate(45deg) scale(1.3);
 }
 .btn-revert span, .btn-delete span {
     display: inline-block;
     background-color: transparent;
-    color: #b00;
-    transform: rotate(45deg) scale(1.3);
+    transform: scale(1.3);
 }
-.btn-delete, .btn-delete span {
-    background-color: #b00;
-    color: #fff;
+.btn-revert:hover, .btn-delete:hover{
+    background-color: #d99;
+    color: #900;
+    transform: scale(1.3);
 }
-.reverted .btn-revert {
-    border: 1px solid #090;
-    background-color: #bfb;
-    color: #090;
-}
-.reverted .btn-revert span {
-    color: #090;
-    transform: rotate(0deg) scale(1.3);
+.btn-revert:hover span, .btn-delete:hover span {
+    color: #900;
 }
 
 .popup-screen.hidden {

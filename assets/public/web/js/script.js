@@ -117,7 +117,7 @@ const transactionData = {
             <p title="${this.formatAmount(
               itemData.amount
             )}">${this.formatAmount(itemData.amount)}</p>
-            <p class="btn-section">
+            <p class="btn-section hidden" onclick="openButtonMenu(this)">
               <button class='btn-revert' onclick='transactionData.revert("${
                 itemData._id
               }", "${itemData.status == "active" ? "extornar" : "restaurar"}")'>
@@ -199,6 +199,15 @@ const transactionData = {
     const popupScreen = document.getElementById("popup-screen");
     popupScreen.classList.add("hidden");
   },
+};
+
+const openButtonMenu = (elm) => {
+  closeAllButtomMenus();
+  elm.classList.remove("hidden");
+};
+const closeAllButtomMenus = () => {
+  const allElements = document.querySelectorAll(".btn-section");
+  allElements.forEach((elm) => elm.classList.add("hidden"));
 };
 
 transactionData.update();
