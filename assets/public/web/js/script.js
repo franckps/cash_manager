@@ -117,21 +117,11 @@ const transactionData = {
             <p title="${this.formatAmount(
               itemData.amount
             )}">${this.formatAmount(itemData.amount)}</p>
-            <p class="btn-section hidden" onclick="openButtonMenu(this)">
-              <button class='btn-revert' onclick='transactionData.revert("${
-                itemData._id
-              }", "${itemData.status == "active" ? "extornar" : "restaurar"}")'>
-              <span>⨁</span> ${
-                itemData.status == "active" ? "Extornar" : "Restaurar"
-              }</button>
-              ${
-                itemData.status == "active"
-                  ? ""
-                  : "<button class='btn-delete' onclick='transactionData.delete(\"" +
-                    itemData._id +
-                    "\")'><span>⨁</span> Excluir</button>"
-              }
-            </p>
+            <p class="btn-section hidden" onclick="openButtonMenu(this, '${
+              itemData._id
+            }', ${
+      itemData.status == "active" ? "true, false, false" : "false, true, true"
+    })"></p>
         </section>
     `;
   },
@@ -192,6 +182,7 @@ const transactionData = {
     this.filter();
   },
   openPopupCreateTransaction: function () {
+    closeAllButtomMenus();
     const popupScreen = document.getElementById("popup-screen");
     popupScreen.classList.remove("hidden");
   },
@@ -200,14 +191,65 @@ const transactionData = {
     popupScreen.classList.add("hidden");
   },
 };
-
-const openButtonMenu = (elm) => {
+let currentlyOpenedBy = null;
+const openButtonMenu = async (elm, id, extornar, excluir, restaurar) => {
   closeAllButtomMenus();
-  elm.classList.remove("hidden");
+
+  if (currentlyOpenedBy == elm) {
+    currentlyOpenedBy = null;
+    return;
+  }
+
+  await awaitSecounds(0.2);
+
+  const itemsMenuRestore = document.getElementById("items-menu-restore");
+  const itemsMenuRevert = document.getElementById("items-menu-revert");
+  const itemsMenuExclude = document.getElementById("items-menu-exclude");
+
+  if (!!extornar) itemsMenuRevert.classList.remove("hidden");
+  else itemsMenuRevert.classList.add("hidden");
+  if (!!excluir) itemsMenuExclude.classList.remove("hidden");
+  else itemsMenuExclude.classList.add("hidden");
+  if (!!restaurar) itemsMenuRestore.classList.remove("hidden");
+  else itemsMenuRestore.classList.add("hidden");
+
+  itemsMenuRestore.onclick = () => {
+    closeAllButtomMenus();
+    transactionData.revert(id, "restaurar");
+  };
+  itemsMenuRevert.onclick = () => {
+    closeAllButtomMenus();
+    transactionData.revert(id, "reverter");
+  };
+  itemsMenuExclude.onclick = () => {
+    closeAllButtomMenus();
+    transactionData.delete(id);
+  };
+
+  const itemsMenu = document.getElementById("items-menu");
+  const topAdjust = document.body.getBoundingClientRect().top;
+  const rightAdjust = document.body.getBoundingClientRect().right;
+  const top = elm.getBoundingClientRect().top;
+  const right = elm.getBoundingClientRect().right;
+  const width = elm.getBoundingClientRect().width;
+  const height = itemsMenu.getBoundingClientRect().height;
+  itemsMenu.style.top =
+    Math.round(top + ((102 - height) / 34) * 15 + topAdjust * -1 - 8) + "px";
+  itemsMenu.style.right = Math.round(rightAdjust - right + width / 2) + "px";
+  itemsMenu.classList.remove("hidden");
+  currentlyOpenedBy = elm;
 };
 const closeAllButtomMenus = () => {
-  const allElements = document.querySelectorAll(".btn-section");
-  allElements.forEach((elm) => elm.classList.add("hidden"));
+  const itemsMenu = document.getElementById("items-menu");
+  itemsMenu.classList.add("hidden");
+};
+
+const awaitSecounds = async (secs = 1) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      return resolve();
+    }, secs * 1000);
+  });
 };
 
 transactionData.update();
