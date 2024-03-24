@@ -338,3 +338,36 @@ header.title span {
     color: rgb(12, 120, 72);
     font-weight: bold;
 }
+
+.items-menu.hidden {
+    transform: translateX(30px);
+}
+
+.items-menu {
+    position: absolute;
+    top: 7rem;
+    right: 7rem;
+    height: 7rem;
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    transition: all 1s ease-in-out;
+}
+.items-menu::after {
+    content: "";
+    position: absolute;
+    display: block;
+    right: -.5rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    height: 1rem;
+    width: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
