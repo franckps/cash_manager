@@ -105,7 +105,7 @@ const transactionData = {
     return `
         <section class="content-item ${
           itemData.status == "reverted" ? "reverted" : ""
-        }">
+        } ${itemData.type.toLowerCase()}">
             <p title="${itemData.title}">${itemData.title}</p>
             <p><span class="${itemData.type.toLowerCase()}">${this.formatType(
       itemData.type

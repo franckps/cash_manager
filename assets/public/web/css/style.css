@@ -136,6 +136,8 @@ header.title span {
     border-bottom: 1px solid #ccc;
     background-color: rgba(245, 245, 245, 1);
     opacity: .8;
+    border-radius: 4px;
+    margin-top: 8px;
 }
 .content .content-item.reverted {
     background-color: rgba(245, 245, 245, .3);
@@ -156,12 +158,18 @@ header.title span {
     padding-bottom: 1rem;
     background-color: transparent;
 }
+.content .content-item.payment {
+    border-left: 3px solid #f00;
+}
 .content .content-item p .payment {
     padding: .3rem .5rem;
     border: 1px solid #f00;
     border-radius: 4px;
     background-color: #fdd;
     color: #f00;
+}
+.content .content-item.receipt {
+    border-left: 3px solid #090;
 }
 .content .content-item p .receipt {
     padding: .3rem .5rem;
