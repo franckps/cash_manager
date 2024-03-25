@@ -85,7 +85,7 @@ const transactionData = {
     const datetime = new Date(dateString);
 
     const [day, month, year, hour, minutes, secounds] = [
-      datetime.getDay(),
+      datetime.getDate(),
       datetime.getMonth(),
       datetime.getFullYear(),
       datetime.getHours(),
