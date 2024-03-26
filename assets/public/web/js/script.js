@@ -101,6 +101,45 @@ const transactionData = {
   formatAmount: function (amount) {
     return `R$ ${amount}`;
   },
+  generateTransactionDetail: function ({
+    title,
+    createdAt,
+    type,
+    amount,
+    description,
+    status,
+  }) {
+    return `<p class="popup-title">
+        Drtalhes da transação
+        <button type="button" onclick="transactionData.closePopupTransactionDetail()">+</button>
+    </p>
+    <div class="popup-main transaction-info">
+    <article>
+        <h3>Transação</h3>
+        <p>${title}</p>
+    </article>
+    <article>
+        <h3>Tipo</h3>
+        <p>${this.formatType(type)}</p>
+    </article>
+    <article>
+        <h3>Data e hora</h3>
+        <p>${this.formatDate(createdAt)}</p>
+    </article>
+    <article>
+        <h3>Valor</h3>
+        <p>${this.formatAmount(amount)}</p>
+    </article>
+    <article>
+        <h3>Estado atual</h3>
+        <p>${status == "active" ? "Ativa" : "Inativa"}</p>
+    </article>
+    <article>
+        <h3>Descrição</h3>
+        <p>${description}</p>
+    </article>
+</div>`;
+  },
   generateItemHTML: function (itemData) {
     return `
         <section class="content-item ${
@@ -123,7 +162,11 @@ const transactionData = {
               itemData._id
             }', ${
       itemData.status == "active" ? "true, false, false" : "false, true, true"
-    })"></p>
+    }, {title: '${itemData.title}', createdAt: '${itemData.createdAt}',type: '${
+      itemData.type
+    }', amount: '${itemData.amount}', description: '${
+      itemData.description
+    }', status: '${itemData.status}'})"></p>
         </section>
     `;
   },
@@ -183,8 +226,52 @@ const transactionData = {
     this.data = aux;
     this.filter();
   },
+  openPopupTransactionDetail: function (transaction) {
+    closeAllButtomMenus();
+    const htmlContent = this.generateTransactionDetail(transaction);
+    document.querySelector("#popup-screen .popup-content").innerHTML =
+      htmlContent;
+    const popupScreen = document.getElementById("popup-screen");
+    popupScreen.classList.remove("hidden");
+  },
+  closePopupTransactionDetail: function () {
+    const popupScreen = document.getElementById("popup-screen");
+    popupScreen.classList.add("hidden");
+  },
   openPopupCreateTransaction: function () {
     closeAllButtomMenus();
+    const htmlContent = `<p class="popup-title">
+    Nova Transação
+    <button type="button" onclick="transactionData.closePopupCreateTransaction()">+</button>
+</p>
+<fieldset class="popup-main">
+    <form action="/api/v1/" method="post" id="transaction-form" onsubmit="return transactionData.create('transaction-form')">
+            <p class="input-container">
+                <label for="input-title">Nome</label>
+                <input type="text" name="title" id="input-title">
+            </p>
+            <p class="input-container">
+                <label for="input-type">Tipo</label>
+                <select name="type" id="input-type">
+                    <option value="Receipt">ENTRADA</option>
+                    <option value="Payment">SAÍDA</option>
+                </select>
+            </p>
+            <p class="input-container">
+                <label for="input-amount">Valor</label>
+                <input type="number" name="amount" id="input-amount">
+            </p>
+            <p class="input-container">
+                <label for="input-description">Detalhes</label>
+                <textarea name="description" id="input-description" cols="30" rows="10"></textarea>
+            </p>
+            <p class="buttons-area">
+                <button type="submit">CRIAR</button>
+            </p>
+    </form>
+</fieldset>`;
+    document.querySelector("#popup-screen .popup-content").innerHTML =
+      htmlContent;
     const popupScreen = document.getElementById("popup-screen");
     popupScreen.classList.remove("hidden");
   },
@@ -194,7 +281,14 @@ const transactionData = {
   },
 };
 let currentlyOpenedBy = null;
-const openButtonMenu = async (elm, id, extornar, excluir, restaurar) => {
+const openButtonMenu = async (
+  elm,
+  id,
+  extornar,
+  excluir,
+  restaurar,
+  trensaction
+) => {
   closeAllButtomMenus();
 
   if (currentlyOpenedBy == elm) {
@@ -207,6 +301,7 @@ const openButtonMenu = async (elm, id, extornar, excluir, restaurar) => {
   const itemsMenuRestore = document.getElementById("items-menu-restore");
   const itemsMenuRevert = document.getElementById("items-menu-revert");
   const itemsMenuExclude = document.getElementById("items-menu-exclude");
+  const itemsMenuDetail = document.getElementById("items-menu-detail");
 
   if (!!extornar) itemsMenuRevert.classList.remove("hidden");
   else itemsMenuRevert.classList.add("hidden");
@@ -214,6 +309,8 @@ const openButtonMenu = async (elm, id, extornar, excluir, restaurar) => {
   else itemsMenuExclude.classList.add("hidden");
   if (!!restaurar) itemsMenuRestore.classList.remove("hidden");
   else itemsMenuRestore.classList.add("hidden");
+
+  itemsMenuDetail.classList.remove("hidden");
 
   itemsMenuRestore.onclick = () => {
     closeAllButtomMenus();
@@ -226,6 +323,10 @@ const openButtonMenu = async (elm, id, extornar, excluir, restaurar) => {
   itemsMenuExclude.onclick = () => {
     closeAllButtomMenus();
     transactionData.delete(id);
+  };
+  itemsMenuDetail.onclick = () => {
+    closeAllButtomMenus();
+    transactionData.openPopupTransactionDetail(trensaction);
   };
 
   const itemsMenu = document.getElementById("items-menu");

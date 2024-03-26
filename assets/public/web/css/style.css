@@ -197,6 +197,14 @@ header.title span {
     transform: rotate(90deg);
 }
 
+.transaction-info article {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: .5rem;
+}
+
 .popup-screen.hidden {
     opacity: 0;
     transform: scale(0);
