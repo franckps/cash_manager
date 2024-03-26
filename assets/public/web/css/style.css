@@ -89,33 +89,33 @@ header.title span {
 .transaction-list .header .header-columns {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     margin-top: 1.5rem;
     text-transform: uppercase;
     border-bottom: 1px solid #ccc;
 }
 .transaction-list .header .header-columns p {
-    display: flex;
     gap: .5rem;
-    width: 15%;
+    flex: 1;
     overflow: hidden;
     white-space: nowrap;
     text-align: center;
-    justify-content: center;
-    align-items: center;
     color: #aaa;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
 .transaction-list .header .header-columns p span {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    line-height: 1rem;
     color: #999;
+}
+.transaction-list .header .header-columns p span + span {
+    transform: translateY(-.5rem);
 }
 
 .sort-buttons button {
@@ -149,7 +149,7 @@ header.title span {
     opacity: 1;
 }
 .content .content-item p {
-    width: 15%;
+    flex: 1;
     position: relative;
     overflow: hidden;
     white-space: nowrap;
@@ -233,6 +233,8 @@ header.title span {
     overflow: scroll;
     box-shadow: 0 0 15rem #777;
     transition: all .5s .5s ease-in-out;
+    width: 90%;
+    max-width: 500px;
 }
 .popup-screen .popup-content .popup-title {
     display: block;
@@ -269,8 +271,7 @@ header.title span {
     position: relative;
     display: block;
     height: 600px;
-    width: 500px;
-    padding: 1rem;
+    width: 90%;
 }
 
 .input-container {
@@ -368,4 +369,30 @@ header.title span {
     height: 0;
     width: 0;
     z-index: -1;
+}
+
+@media screen and (width < 840px) {
+    .transaction-list .header .filter-field {
+        width: calc(100% - 4rem);
+    }
+    
+    .col2, .col4 {
+        display: none;
+        visibility: hidden;
+        width: 0;
+        float: left;
+    }
+
+    .transaction-list .header .header-columns p {
+        overflow: visible;
+    }
+}
+
+@media screen and (width < 720px) {
+    .col3 {
+        display: none;
+        visibility: hidden;
+        width: 0;
+        float: left;
+    }
 }

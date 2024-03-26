@@ -106,18 +106,20 @@ const transactionData = {
         <section class="content-item ${
           itemData.status == "reverted" ? "reverted" : ""
         } ${itemData.type.toLowerCase()}">
-            <p title="${itemData.title}">${itemData.title}</p>
-            <p><span class="${itemData.type.toLowerCase()}">${this.formatType(
+            <p class="col1" title="${itemData.title}">${itemData.title}</p>
+            <p class="col2"><span class="${itemData.type.toLowerCase()}">${this.formatType(
       itemData.type
     )}</span></p>
-            <p title="${this.formatDate(itemData.createdAt)}">${this.formatDate(
-      itemData.createdAt
-    )}</p>
-            <p title="${itemData.description}">${itemData.description}</p>
-            <p title="${this.formatAmount(
+            <p class="col3" title="${this.formatDate(
+              itemData.createdAt
+            )}">${this.formatDate(itemData.createdAt)}</p>
+            <p class="col4" title="${itemData.description}">${
+      itemData.description
+    }</p>
+            <p class="col5" title="${this.formatAmount(
               itemData.amount
             )}">${this.formatAmount(itemData.amount)}</p>
-            <p class="btn-section hidden" onclick="openButtonMenu(this, '${
+            <p class="btn-section hidden col6" onclick="openButtonMenu(this, '${
               itemData._id
             }', ${
       itemData.status == "active" ? "true, false, false" : "false, true, true"
