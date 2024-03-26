@@ -259,7 +259,7 @@ const transactionData = {
             </p>
             <p class="input-container">
                 <label for="input-amount">Valor</label>
-                <input type="number" name="amount" id="input-amount">
+                <input type="number" step="0.010" name="amount" id="input-amount">
             </p>
             <p class="input-container">
                 <label for="input-description">Detalhes</label>
