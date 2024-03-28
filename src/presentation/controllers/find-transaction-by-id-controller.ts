@@ -1,4 +1,4 @@
-import { FindTransactionById } from "src/domain/usecases/find-transaction-by-id";
+import { FindTransactionById } from "src/domain/usecases/transaction/find-transaction-by-id";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 

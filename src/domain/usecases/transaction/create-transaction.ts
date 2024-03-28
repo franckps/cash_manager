@@ -1,4 +1,7 @@
-import { TransactionModel, TransactionTypeModel } from "../models/transaction";
+import {
+  TransactionModel,
+  TransactionTypeModel,
+} from "../../models/transaction";
 
 export interface CreateTransactionModel {
   amount: string;

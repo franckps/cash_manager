@@ -1,4 +1,4 @@
-import { DeleteTransaction } from "../../src/domain/usecases/delete-transaction";
+import { DeleteTransaction } from "../../src/domain/usecases/transaction/delete-transaction";
 import { DeleteTransactionController } from "../../src/presentation/controllers/delete-transaction-controller";
 
 interface SutTypes {

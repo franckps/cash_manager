@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { TransactionModel } from "../../../../src/domain/models/transaction";
-import { TransactionFiltersModel } from "../../../../src/domain/usecases/find-transaction-by-filters";
+import { TransactionFiltersModel } from "../../../../src/domain/usecases/transaction/find-transaction-by-filters";
 import { TransactionRepository } from "../../../../src/infra/db/sequelize/transaction-repository";
 
 const transactionModel: TransactionModel = {

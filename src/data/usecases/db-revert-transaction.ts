@@ -1,4 +1,4 @@
-import { RevertTransaction } from "../../domain/usecases/revert-transaction";
+import { RevertTransaction } from "../../domain/usecases/transaction/revert-transaction";
 import { RevertTransactionRepository } from "../protocols/db/revert-transaction-repository";
 
 export class DbRevertTransaction implements RevertTransaction {

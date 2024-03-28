@@ -1,4 +1,4 @@
-import { GetTotalAmount } from "src/domain/usecases/get-total-amount";
+import { GetTotalAmount } from "src/domain/usecases/transaction/get-total-amount";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 

@@ -1,4 +1,4 @@
-import { DeleteTransaction } from "../../domain/usecases/delete-transaction";
+import { DeleteTransaction } from "../../domain/usecases/transaction/delete-transaction";
 import { DeleteTransactionRepository } from "../protocols/db/delete-transaction-repository";
 
 export class DbDeleteTransaction implements DeleteTransaction {

@@ -8,7 +8,7 @@ import {
   TransactionModel,
   TransactionStatusModel,
 } from "src/domain/models/transaction";
-import { TransactionFiltersModel } from "src/domain/usecases/find-transaction-by-filters";
+import { TransactionFiltersModel } from "src/domain/usecases/transaction/find-transaction-by-filters";
 
 export class TransactionRepository
   implements

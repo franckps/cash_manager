@@ -1,4 +1,4 @@
-import { RevertTransaction } from "src/domain/usecases/revert-transaction";
+import { RevertTransaction } from "src/domain/usecases/transaction/revert-transaction";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 

@@ -1,4 +1,4 @@
-import { DeleteTransaction } from "src/domain/usecases/delete-transaction";
+import { DeleteTransaction } from "src/domain/usecases/transaction/delete-transaction";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 

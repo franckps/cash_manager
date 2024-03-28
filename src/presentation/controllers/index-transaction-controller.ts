@@ -1,4 +1,4 @@
-import { FindTransactionByFilters } from "src/domain/usecases/find-transaction-by-filters";
+import { FindTransactionByFilters } from "src/domain/usecases/transaction/find-transaction-by-filters";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 

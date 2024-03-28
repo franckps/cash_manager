@@ -1,4 +1,4 @@
-import { CreateTransactionModel } from "../../src/domain/usecases/create-transaction";
+import { CreateTransactionModel } from "../../src/domain/usecases/transaction/create-transaction";
 import { CreateTransactionValidator } from "../../src/utils/validators";
 
 describe("Validators", () => {

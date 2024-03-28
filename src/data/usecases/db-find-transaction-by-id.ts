@@ -1,5 +1,5 @@
 import { TransactionModel } from "src/domain/models/transaction";
-import { FindTransactionById } from "../../domain/usecases/find-transaction-by-id";
+import { FindTransactionById } from "../../domain/usecases/transaction/find-transaction-by-id";
 import { FindTransactionByIdRepository } from "../protocols/db/find-transaction-by-id-repository";
 
 export class DbFindTransactionById implements FindTransactionById {

@@ -1,7 +1,7 @@
 import {
   CreateTransaction,
   CreateTransactionModel,
-} from "../../domain/usecases/create-transaction";
+} from "../../domain/usecases/transaction/create-transaction";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 import { Validator } from "../protocols/validator";

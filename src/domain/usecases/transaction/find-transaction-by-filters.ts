@@ -2,7 +2,7 @@ import {
   TransactionTypeModel,
   TransactionModel,
   TransactionStatusModel,
-} from "../models/transaction";
+} from "../../models/transaction";
 
 export interface TransactionFiltersModel {
   amount?: [string, string];

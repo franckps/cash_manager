@@ -1,4 +1,4 @@
-import { FindTransactionById } from "../../src/domain/usecases/find-transaction-by-id";
+import { FindTransactionById } from "../../src/domain/usecases/transaction/find-transaction-by-id";
 import { TransactionModel } from "../../src/domain/models/transaction";
 import { FindTransactionByIdController } from "../../src/presentation/controllers/find-transaction-by-id-controller";
 

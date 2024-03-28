@@ -1,4 +1,4 @@
-import { GetTotalAmount } from "../../src/domain/usecases/get-total-amount";
+import { GetTotalAmount } from "../../src/domain/usecases/transaction/get-total-amount";
 import { GetTotalAmountController } from "../../src/presentation/controllers/get-total-amount-controller";
 
 interface SutTypes {

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CreateTransactionModel } from "../domain/usecases/create-transaction";
+import { CreateTransactionModel } from "../domain/usecases/transaction/create-transaction";
 import { Validator } from "../presentation/protocols/validator";
 
 const transactionScheme = z.object({
