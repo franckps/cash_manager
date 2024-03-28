@@ -1,4 +1,4 @@
-import { DbFindTransactionByFilters } from "../../../src/data/usecases/db-find-transaction-by-filters";
+import { DbFindTransactionByFilters } from "../../../src/data/usecases/transaction/db-find-transaction-by-filters";
 import { FindTransactionByFiltersRepository } from "../../../src/data/protocols/db/transaction/find-transaction-by-filters-repository";
 import { TransactionModel } from "../../../src/domain/models/transaction";
 

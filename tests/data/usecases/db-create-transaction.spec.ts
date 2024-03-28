@@ -1,4 +1,4 @@
-import { DbCreateTransaction } from "../../../src/data/usecases/db-create-transaction";
+import { DbCreateTransaction } from "../../../src/data/usecases/transaction/db-create-transaction";
 import { CreateTransactionRepository } from "../../../src/data/protocols/db/transaction/create-transaction-repository";
 import { TransactionModel } from "../../../src/domain/models/transaction";
 import crypto from "crypto";
