@@ -1,6 +1,6 @@
 import { CreateTransactionController } from "../../presentation/controllers/transaction/create-transaction-controller";
 import { TransactionRepository } from "../db/sequelize/transaction-repository";
-import { Transaction } from "../db/sequelize/sequelize-instance";
+import { Account, Transaction } from "../db/sequelize/sequelize-instance";
 import { FindTransactionByFiltersController } from "../../presentation/controllers/transaction/index-transaction-controller";
 import { DbCreateTransaction } from "../../data/usecases/transaction/db-create-transaction";
 import { DbFindTransactionByFilters } from "../../data/usecases/transaction/db-find-transaction-by-filters";
@@ -13,9 +13,16 @@ import { DeleteTransactionController } from "../../presentation/controllers/tran
 import { FindTransactionByIdController } from "../../presentation/controllers/transaction/find-transaction-by-id-controller";
 import { DbFindTransactionById } from "../../data/usecases/transaction/db-find-transaction-by-id";
 import { CreateTransactionValidator } from "../../utils/validators";
+import { AccountRepository } from "../db/sequelize/account-repository";
+import { CreateAccountController } from "../../presentation/controllers/account/create-account-controller";
+import { DbCreateAccount } from "../../data/usecases/account/db-create-account";
+import { DeleteAccountController } from "../../presentation/controllers/account/delete-account-controller";
+import { DbDeleteAccount } from "../../data/usecases/account/db-delete-account";
 
 const transactionRepository = new TransactionRepository(Transaction);
 const createTransactionValidator = new CreateTransactionValidator();
+
+const accountRepository = new AccountRepository(Account);
 
 export const buildCreateTransactionController = () => {
   return new CreateTransactionController(
@@ -52,4 +59,12 @@ export const buildDeleteTransactionController = () => {
   return new DeleteTransactionController(
     new DbDeleteTransaction(transactionRepository)
   );
+};
+
+export const buildCreateAccountController = () => {
+  return new CreateAccountController(new DbCreateAccount(accountRepository));
+};
+
+export const buildDeleteAccountController = () => {
+  return new DeleteAccountController(new DbDeleteAccount(accountRepository));
 };
