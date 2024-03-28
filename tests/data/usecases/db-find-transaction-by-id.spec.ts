@@ -1,5 +1,5 @@
 import { DbFindTransactionById } from "../../../src/data/usecases/db-find-transaction-by-id";
-import { FindTransactionByIdRepository } from "../../../src/data/protocols/db/find-transaction-by-id-repository";
+import { FindTransactionByIdRepository } from "../../../src/data/protocols/db/transaction/find-transaction-by-id-repository";
 import { TransactionModel } from "../../../src/domain/models/transaction";
 
 const makeSut = (): {

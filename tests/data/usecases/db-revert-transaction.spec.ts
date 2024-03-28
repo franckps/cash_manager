@@ -1,5 +1,5 @@
 import { DbRevertTransaction } from "../../../src/data/usecases/db-revert-transaction";
-import { RevertTransactionRepository } from "../../../src/data/protocols/db/revert-transaction-repository";
+import { RevertTransactionRepository } from "../../../src/data/protocols/db/transaction/revert-transaction-repository";
 
 const makeSut = (): {
   sut: DbRevertTransaction;

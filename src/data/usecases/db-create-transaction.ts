@@ -4,7 +4,7 @@ import {
   CreateTransaction,
   CreateTransactionModel,
 } from "../../domain/usecases/transaction/create-transaction";
-import { CreateTransactionRepository } from "../protocols/db/create-transaction-repository";
+import { CreateTransactionRepository } from "../protocols/db/transaction/create-transaction-repository";
 
 export class DbCreateTransaction implements CreateTransaction {
   constructor(private readonly repository: CreateTransactionRepository) {}

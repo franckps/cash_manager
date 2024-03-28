@@ -1,9 +1,9 @@
 import { Filterable, ModelDefined, Op, WhereOptions } from "sequelize";
-import { CreateTransactionRepository } from "src/data/protocols/db/create-transaction-repository";
-import { FindTransactionByFiltersRepository } from "src/data/protocols/db/find-transaction-by-filters-repository";
-import { FindTransactionByIdRepository } from "src/data/protocols/db/find-transaction-by-id-repository";
-import { RevertTransactionRepository } from "src/data/protocols/db/revert-transaction-repository";
-import { DeleteTransactionRepository } from "src/data/protocols/db/delete-transaction-repository";
+import { CreateTransactionRepository } from "src/data/protocols/db/transaction/create-transaction-repository";
+import { FindTransactionByFiltersRepository } from "src/data/protocols/db/transaction/find-transaction-by-filters-repository";
+import { FindTransactionByIdRepository } from "src/data/protocols/db/transaction/find-transaction-by-id-repository";
+import { RevertTransactionRepository } from "src/data/protocols/db/transaction/revert-transaction-repository";
+import { DeleteTransactionRepository } from "src/data/protocols/db/transaction/delete-transaction-repository";
 import {
   TransactionModel,
   TransactionStatusModel,

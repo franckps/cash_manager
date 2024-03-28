@@ -3,7 +3,7 @@ import {
   FindTransactionByFilters,
   TransactionFiltersModel,
 } from "../../domain/usecases/transaction/find-transaction-by-filters";
-import { FindTransactionByFiltersRepository } from "../protocols/db/find-transaction-by-filters-repository";
+import { FindTransactionByFiltersRepository } from "../protocols/db/transaction/find-transaction-by-filters-repository";
 
 export class DbFindTransactionByFilters implements FindTransactionByFilters {
   constructor(
