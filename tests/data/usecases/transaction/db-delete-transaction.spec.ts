@@ -1,5 +1,5 @@
-import { DbDeleteTransaction } from "../../../src/data/usecases/transaction/db-delete-transaction";
-import { DeleteTransactionRepository } from "../../../src/data/protocols/db/transaction/delete-transaction-repository";
+import { DbDeleteTransaction } from "../../../../src/data/usecases/transaction/db-delete-transaction";
+import { DeleteTransactionRepository } from "../../../../src/data/protocols/db/transaction/delete-transaction-repository";
 
 const makeSut = (): {
   sut: DbDeleteTransaction;

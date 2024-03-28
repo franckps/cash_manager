@@ -1,6 +1,6 @@
-import { DbGetTotalAmount } from "../../../src/data/usecases/transaction/db-get-total-amount";
-import { GetTotalAmountRepository } from "../../../src/data/protocols/db/transaction/get-total-amount-repository";
-import { TotalAmountModel } from "../../../src/domain/models/total-amount";
+import { DbGetTotalAmount } from "../../../../src/data/usecases/transaction/db-get-total-amount";
+import { GetTotalAmountRepository } from "../../../../src/data/protocols/db/transaction/get-total-amount-repository";
+import { TotalAmountModel } from "../../../../src/domain/models/total-amount";
 
 const makeSut = (): {
   sut: DbGetTotalAmount;

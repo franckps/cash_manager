@@ -1,6 +1,6 @@
-import { DbFindTransactionByFilters } from "../../../src/data/usecases/transaction/db-find-transaction-by-filters";
-import { FindTransactionByFiltersRepository } from "../../../src/data/protocols/db/transaction/find-transaction-by-filters-repository";
-import { TransactionModel } from "../../../src/domain/models/transaction";
+import { DbFindTransactionByFilters } from "../../../../src/data/usecases/transaction/db-find-transaction-by-filters";
+import { FindTransactionByFiltersRepository } from "../../../../src/data/protocols/db/transaction/find-transaction-by-filters-repository";
+import { TransactionModel } from "../../../../src/domain/models/transaction";
 
 const makeTransactionFilter = (): {
   type?: "Receipt" | "Payment";
