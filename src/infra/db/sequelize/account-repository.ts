@@ -11,7 +11,7 @@ export class AccountRepository
   ) {}
 
   async create(model: AccountModel): Promise<AccountModel> {
-    const result = await this.account.create({ ...model });
+    const result = await this.account.create({ ...model, status: "active" });
     return result.dataValues;
   }
 
