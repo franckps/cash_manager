@@ -1,4 +1,3 @@
-import { Op } from "sequelize";
 import { AccountModel } from "../../../../src/domain/models/account";
 import { AccountRepository } from "../../../../src/infra/db/sequelize/account-repository";
 
@@ -18,6 +17,15 @@ interface Account {
       };
     }
   ): Promise<{ dataValues: AccountModel }>;
+
+  findAll(fiter: {
+    where: {
+      status: string;
+    };
+  }): Promise<{
+    at: (ky: number) => { dataValues: AccountModel };
+    map: (elm: { dataValues: AccountModel }) => AccountModel[];
+  }>;
 }
 
 interface SutTypes {
@@ -32,6 +40,22 @@ const makeAccountStub = () => {
       filter: { where: { account: string } }
     ): Promise<{ dataValues: AccountModel }> {
       return Promise.resolve({ dataValues: accountModel });
+    }
+
+    findAll(fiter: {
+      where: {
+        status: string;
+      };
+    }): Promise<{
+      at: (ky: number) => { dataValues: AccountModel };
+      map: (elm: { dataValues: AccountModel }) => AccountModel[];
+    }> {
+      return Promise.resolve({
+        at: (ky) => ({
+          dataValues: accountModel,
+        }),
+        map: (elm: { dataValues: AccountModel }) => [accountModel],
+      });
     }
 
     async create(model: AccountModel): Promise<{ dataValues: AccountModel }> {
@@ -79,6 +103,16 @@ describe("Sequelize AccountRepository", () => {
           },
         }
       );
+    });
+  });
+
+  describe("#findAll", () => {
+    test("should call Account.findAll correctly", async () => {
+      const { sut, accountStub } = makeSut();
+      const findAllSpy = jest.spyOn(accountStub, "findAll");
+      await sut.findAll();
+
+      expect(findAllSpy).toBeCalledWith({ where: { status: "active" } });
     });
   });
 });

@@ -7,6 +7,7 @@ import {
   buildFindTransactionByIdController,
   buildCreateAccountController,
   buildDeleteAccountController,
+  buildFindAllAccountController,
 } from "../../../src/infra/factories/controller-factory";
 import { CreateTransactionController } from "../../../src/presentation/controllers/transaction/create-transaction-controller";
 import { FindTransactionByFiltersController } from "../../../src/presentation/controllers/transaction/index-transaction-controller";
@@ -16,6 +17,7 @@ import { DeleteTransactionController } from "../../../src/presentation/controlle
 import { FindTransactionByIdController } from "../../../src/presentation/controllers/transaction/find-transaction-by-id-controller";
 import { CreateAccountController } from "../../../src/presentation/controllers/account/create-account-controller";
 import { DeleteAccountController } from "../../../src/presentation/controllers/account/delete-account-controller";
+import { FindAllAccountController } from "../../../src/presentation/controllers/account/find-all-account-controller";
 
 describe("Controller Factory", () => {
   afterAll(() => {
@@ -64,6 +66,11 @@ describe("Controller Factory", () => {
     test("#buildDeleteAccountController", () => {
       const controller = buildDeleteAccountController();
       expect(controller).toBeInstanceOf(DeleteAccountController);
+    });
+
+    test("#buildFindAllAccountController", () => {
+      const controller = buildFindAllAccountController();
+      expect(controller).toBeInstanceOf(FindAllAccountController);
     });
   });
 });
