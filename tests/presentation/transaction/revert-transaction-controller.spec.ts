@@ -1,5 +1,5 @@
-import { RevertTransaction } from "../../src/domain/usecases/transaction/revert-transaction";
-import { RevertTransactionController } from "../../src/presentation/controllers/revert-transaction-controller";
+import { RevertTransaction } from "../../../src/domain/usecases/transaction/revert-transaction";
+import { RevertTransactionController } from "../../../src/presentation/controllers/transaction/revert-transaction-controller";
 
 interface SutTypes {
   sut: RevertTransactionController;

@@ -1,6 +1,6 @@
 import { FindTransactionByFilters } from "src/domain/usecases/transaction/find-transaction-by-filters";
-import { Controller } from "../protocols/controller";
-import { HttpRequest, HttpResponse } from "../protocols/http";
+import { Controller } from "../../protocols/controller";
+import { HttpRequest, HttpResponse } from "../../protocols/http";
 
 export class FindTransactionByFiltersController implements Controller {
   constructor(

@@ -1,10 +1,10 @@
 import {
   CreateTransaction,
   CreateTransactionModel,
-} from "../../domain/usecases/transaction/create-transaction";
-import { Controller } from "../protocols/controller";
-import { HttpRequest, HttpResponse } from "../protocols/http";
-import { Validator } from "../protocols/validator";
+} from "../../../domain/usecases/transaction/create-transaction";
+import { Controller } from "../../protocols/controller";
+import { HttpRequest, HttpResponse } from "../../protocols/http";
+import { Validator } from "../../protocols/validator";
 
 export class CreateTransactionController implements Controller {
   constructor(

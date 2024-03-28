@@ -1,10 +1,10 @@
 import {
   CreateTransaction,
   CreateTransactionModel,
-} from "../../src/domain/usecases/transaction/create-transaction";
-import { TransactionModel } from "../../src/domain/models/transaction";
-import { CreateTransactionController } from "../../src/presentation/controllers/create-transaction-controller";
-import { Validator } from "../../src/presentation/protocols/validator";
+} from "../../../src/domain/usecases/transaction/create-transaction";
+import { TransactionModel } from "../../../src/domain/models/transaction";
+import { CreateTransactionController } from "../../../src/presentation/controllers/transaction/create-transaction-controller";
+import { Validator } from "../../../src/presentation/protocols/validator";
 
 const makeTransactionRequest = (): {
   body: {

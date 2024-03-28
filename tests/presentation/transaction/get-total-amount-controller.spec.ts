@@ -1,5 +1,5 @@
-import { GetTotalAmount } from "../../src/domain/usecases/transaction/get-total-amount";
-import { GetTotalAmountController } from "../../src/presentation/controllers/get-total-amount-controller";
+import { GetTotalAmount } from "../../../src/domain/usecases/transaction/get-total-amount";
+import { GetTotalAmountController } from "../../../src/presentation/controllers/transaction/get-total-amount-controller";
 
 interface SutTypes {
   sut: GetTotalAmountController;

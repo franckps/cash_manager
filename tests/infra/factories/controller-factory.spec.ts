@@ -6,12 +6,12 @@ import {
   buildDeleteTransactionController,
   buildFindTransactionByIdController,
 } from "../../../src/infra/factories/controller-factory";
-import { CreateTransactionController } from "../../../src/presentation/controllers/create-transaction-controller";
-import { FindTransactionByFiltersController } from "../../../src/presentation/controllers/index-transaction-controller";
-import { GetTotalAmountController } from "../../../src/presentation/controllers/get-total-amount-controller";
-import { RevertTransactionController } from "../../../src/presentation/controllers/revert-transaction-controller";
-import { DeleteTransactionController } from "../../../src/presentation/controllers/delete-transaction-controller";
-import { FindTransactionByIdController } from "../../../src/presentation/controllers/find-transaction-by-id-controller";
+import { CreateTransactionController } from "../../../src/presentation/controllers/transaction/create-transaction-controller";
+import { FindTransactionByFiltersController } from "../../../src/presentation/controllers/transaction/index-transaction-controller";
+import { GetTotalAmountController } from "../../../src/presentation/controllers/transaction/get-total-amount-controller";
+import { RevertTransactionController } from "../../../src/presentation/controllers/transaction/revert-transaction-controller";
+import { DeleteTransactionController } from "../../../src/presentation/controllers/transaction/delete-transaction-controller";
+import { FindTransactionByIdController } from "../../../src/presentation/controllers/transaction/find-transaction-by-id-controller";
 
 describe("Controller Factory", () => {
   afterAll(() => {

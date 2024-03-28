@@ -1,6 +1,6 @@
-import { FindTransactionById } from "../../src/domain/usecases/transaction/find-transaction-by-id";
-import { TransactionModel } from "../../src/domain/models/transaction";
-import { FindTransactionByIdController } from "../../src/presentation/controllers/find-transaction-by-id-controller";
+import { FindTransactionById } from "../../../src/domain/usecases/transaction/find-transaction-by-id";
+import { TransactionModel } from "../../../src/domain/models/transaction";
+import { FindTransactionByIdController } from "../../../src/presentation/controllers/transaction/find-transaction-by-id-controller";
 
 interface SutTypes {
   sut: FindTransactionByIdController;

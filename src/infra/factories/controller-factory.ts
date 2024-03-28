@@ -1,16 +1,16 @@
-import { CreateTransactionController } from "../../presentation/controllers/create-transaction-controller";
+import { CreateTransactionController } from "../../presentation/controllers/transaction/create-transaction-controller";
 import { TransactionRepository } from "../db/sequelize/transaction-repository";
 import { Transaction } from "../db/sequelize/sequelize-instance";
-import { FindTransactionByFiltersController } from "../../presentation/controllers/index-transaction-controller";
+import { FindTransactionByFiltersController } from "../../presentation/controllers/transaction/index-transaction-controller";
 import { DbCreateTransaction } from "../../data/usecases/transaction/db-create-transaction";
 import { DbFindTransactionByFilters } from "../../data/usecases/transaction/db-find-transaction-by-filters";
 import { DbGetTotalAmount } from "../../data/usecases/transaction/db-get-total-amount";
 import { DbRevertTransaction } from "../../data/usecases/transaction/db-revert-transaction";
 import { DbDeleteTransaction } from "../../data/usecases/transaction/db-delete-transaction";
-import { GetTotalAmountController } from "../../presentation/controllers/get-total-amount-controller";
-import { RevertTransactionController } from "../../presentation/controllers/revert-transaction-controller";
-import { DeleteTransactionController } from "../../presentation/controllers/delete-transaction-controller";
-import { FindTransactionByIdController } from "../../presentation/controllers/find-transaction-by-id-controller";
+import { GetTotalAmountController } from "../../presentation/controllers/transaction/get-total-amount-controller";
+import { RevertTransactionController } from "../../presentation/controllers/transaction/revert-transaction-controller";
+import { DeleteTransactionController } from "../../presentation/controllers/transaction/delete-transaction-controller";
+import { FindTransactionByIdController } from "../../presentation/controllers/transaction/find-transaction-by-id-controller";
 import { DbFindTransactionById } from "../../data/usecases/transaction/db-find-transaction-by-id";
 import { CreateTransactionValidator } from "../../utils/validators";
 

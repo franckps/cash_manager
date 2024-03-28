@@ -1,9 +1,9 @@
 import {
   FindTransactionByFilters,
   TransactionFiltersModel,
-} from "../../src/domain/usecases/transaction/find-transaction-by-filters";
-import { TransactionModel } from "../../src/domain/models/transaction";
-import { FindTransactionByFiltersController } from "../../src/presentation/controllers/index-transaction-controller";
+} from "../../../src/domain/usecases/transaction/find-transaction-by-filters";
+import { TransactionModel } from "../../../src/domain/models/transaction";
+import { FindTransactionByFiltersController } from "../../../src/presentation/controllers/transaction/index-transaction-controller";
 
 const makeTransactionRequest = (): {
   query: {

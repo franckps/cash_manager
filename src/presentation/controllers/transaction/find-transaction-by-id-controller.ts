@@ -1,6 +1,6 @@
 import { FindTransactionById } from "src/domain/usecases/transaction/find-transaction-by-id";
-import { Controller } from "../protocols/controller";
-import { HttpRequest, HttpResponse } from "../protocols/http";
+import { Controller } from "../../protocols/controller";
+import { HttpRequest, HttpResponse } from "../../protocols/http";
 
 export class FindTransactionByIdController implements Controller {
   constructor(private readonly findTransactionById: FindTransactionById) {}

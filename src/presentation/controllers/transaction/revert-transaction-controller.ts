@@ -1,6 +1,6 @@
 import { RevertTransaction } from "src/domain/usecases/transaction/revert-transaction";
-import { Controller } from "../protocols/controller";
-import { HttpRequest, HttpResponse } from "../protocols/http";
+import { Controller } from "../../protocols/controller";
+import { HttpRequest, HttpResponse } from "../../protocols/http";
 
 export class RevertTransactionController implements Controller {
   constructor(private readonly revertTransaction: RevertTransaction) {}
