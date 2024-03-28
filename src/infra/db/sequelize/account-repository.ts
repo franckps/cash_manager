@@ -25,4 +25,9 @@ export class AccountRepository
       }
     );
   }
+
+  async findAll(): Promise<AccountModel[]> {
+    const result = await this.account.findAll({ where: { status: "active" } });
+    return result.map((elm) => elm.dataValues);
+  }
 }

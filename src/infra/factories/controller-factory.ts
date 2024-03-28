@@ -18,6 +18,8 @@ import { CreateAccountController } from "../../presentation/controllers/account/
 import { DbCreateAccount } from "../../data/usecases/account/db-create-account";
 import { DeleteAccountController } from "../../presentation/controllers/account/delete-account-controller";
 import { DbDeleteAccount } from "../../data/usecases/account/db-delete-account";
+import { FindAllAccountController } from "../../presentation/controllers/account/find-all-account-controller";
+import { DbFindAllAccount } from "../../data/usecases/account/db-find-all-account";
 
 const transactionRepository = new TransactionRepository(Transaction);
 const createTransactionValidator = new CreateTransactionValidator();
@@ -67,4 +69,8 @@ export const buildCreateAccountController = () => {
 
 export const buildDeleteAccountController = () => {
   return new DeleteAccountController(new DbDeleteAccount(accountRepository));
+};
+
+export const buildFindAllAccountController = () => {
+  return new FindAllAccountController(new DbFindAllAccount(accountRepository));
 };
