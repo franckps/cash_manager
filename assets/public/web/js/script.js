@@ -110,7 +110,7 @@ const transactionData = {
     status,
   }) {
     return `<p class="popup-title">
-        Drtalhes da transação
+        Detalhes da transação
         <button type="button" onclick="transactionData.closePopupTransactionDetail()">+</button>
     </p>
     <div class="popup-main transaction-info">
