@@ -11,5 +11,8 @@ export interface CreateTransactionModel {
 }
 
 export interface CreateTransaction {
-  create(transaction: CreateTransactionModel): Promise<TransactionModel>;
+  create(
+    account: string,
+    transaction: CreateTransactionModel
+  ): Promise<TransactionModel>;
 }

@@ -1,5 +1,5 @@
 import { TransactionModel } from "../../models/transaction";
 
 export interface FindTransactionById {
-  findById(_id: string): Promise<TransactionModel>;
+  findById(account: string, _id: string): Promise<TransactionModel>;
 }

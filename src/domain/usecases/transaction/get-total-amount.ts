@@ -1,3 +1,3 @@
 export interface GetTotalAmount {
-  get(): Promise<{ amount: string }>;
+  get(account: string): Promise<{ amount: string }>;
 }

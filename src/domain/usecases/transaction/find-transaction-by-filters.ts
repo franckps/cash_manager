@@ -12,5 +12,8 @@ export interface TransactionFiltersModel {
 }
 
 export interface FindTransactionByFilters {
-  find(filters: TransactionFiltersModel): Promise<TransactionModel[]>;
+  find(
+    account: string,
+    filters: TransactionFiltersModel
+  ): Promise<TransactionModel[]>;
 }

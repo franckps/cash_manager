@@ -1,3 +1,3 @@
 export interface DeleteTransaction {
-  delete(_id: string): Promise<void>;
+  delete(account: string, _id: string): Promise<void>;
 }
