@@ -21,7 +21,10 @@ const makeSut = (): {
 } => {
   class CreateTransactionRepositoryStub implements CreateTransactionRepository {
     constructor() {}
-    create(transaction: TransactionModel): Promise<TransactionModel> {
+    create(
+      account: string,
+      transaction: TransactionModel
+    ): Promise<TransactionModel> {
       return Promise.resolve(transaction);
     }
   }
@@ -41,16 +44,16 @@ describe("DbCreateTransaction UseCase", () => {
     .mockReturnValue("1-2-3-4-5");
   test("Should call the crypto randomUUID method to generate an unique id", async () => {
     const { sut } = makeSut();
-    await sut.create(makeTransactionData());
+    await sut.create("any_account", makeTransactionData());
 
     expect(spyRandomUUID).toHaveBeenCalled();
   });
   test("Should call CreateTransactionRepository with the correct values", async () => {
     const { sut, createTransactionRepositoryStub } = makeSut();
     const createSpy = jest.spyOn(createTransactionRepositoryStub, "create");
-    await sut.create(makeTransactionData());
+    await sut.create("any_account", makeTransactionData());
 
-    expect(createSpy).toHaveBeenCalledWith({
+    expect(createSpy).toHaveBeenCalledWith("any_account", {
       _id: "1-2-3-4-5",
       amount: "any_amount",
       type: "Payment",
@@ -65,13 +68,16 @@ describe("DbCreateTransaction UseCase", () => {
       .spyOn(createTransactionRepositoryStub, "create")
       .mockRejectedValue(new Error("any_error"));
     jest.spyOn(sut, "create");
-    const promiseRejected = sut.create(makeTransactionData());
+    const promiseRejected = sut.create("any_account", makeTransactionData());
 
     await expect(promiseRejected).rejects.toThrow();
   });
   test("Should return the correct data if succeeded", async () => {
     const { sut } = makeSut();
-    const newTransaction = await sut.create(makeTransactionData());
+    const newTransaction = await sut.create(
+      "any_account",
+      makeTransactionData()
+    );
 
     expect(newTransaction).toEqual({
       _id: "1-2-3-4-5",

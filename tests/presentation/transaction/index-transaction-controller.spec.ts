@@ -12,6 +12,7 @@ const makeTransactionRequest = (): {
     title: string;
     status: "active" | "reverted";
   };
+  params: { account: string };
 } => ({
   query: {
     amount: "any_amount",
@@ -19,6 +20,7 @@ const makeTransactionRequest = (): {
     title: "any_title",
     status: "active",
   },
+  params: { account: "any_account" },
 });
 
 const makeSut = (): {
@@ -27,7 +29,7 @@ const makeSut = (): {
 } => {
   class FindTransactionByFiltersStub implements FindTransactionByFilters {
     constructor() {}
-    find(_: TransactionFiltersModel): Promise<TransactionModel[]> {
+    find(__: string, _: TransactionFiltersModel): Promise<TransactionModel[]> {
       return Promise.resolve([
         {
           _id: "any__id",
@@ -59,7 +61,7 @@ describe("FindTransactionByFilters", () => {
     const findSpy = jest.spyOn(findTransactionByFiltersControllerStub, "find");
     await sut.handle(makeTransactionRequest());
 
-    expect(findSpy).toHaveBeenCalledWith({
+    expect(findSpy).toHaveBeenCalledWith("any_account", {
       amount: "any_amount",
       type: "Payment",
       title: "any_title",

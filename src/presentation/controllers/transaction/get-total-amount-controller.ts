@@ -5,8 +5,8 @@ import { HttpRequest, HttpResponse } from "../../protocols/http";
 export class GetTotalAmountController implements Controller {
   constructor(private readonly getTotalAmount: GetTotalAmount) {}
 
-  async handle(_: HttpRequest): Promise<HttpResponse> {
-    const result = await this.getTotalAmount.get();
+  async handle(request: HttpRequest): Promise<HttpResponse> {
+    const result = await this.getTotalAmount.get(request.params.account);
 
     return {
       statusCode: 200,

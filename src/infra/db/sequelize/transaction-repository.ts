@@ -25,15 +25,19 @@ export class TransactionRepository
     >
   ) {}
 
-  async create(model: TransactionModel): Promise<TransactionModel> {
-    const result = await this.transaction.create({ ...model });
+  async create(
+    account: string,
+    model: TransactionModel
+  ): Promise<TransactionModel> {
+    const result = await this.transaction.create({ ...model, account });
     return result.dataValues;
   }
 
-  async findById(_id: string): Promise<TransactionModel> {
+  async findById(account: string, _id: string): Promise<TransactionModel> {
     const result = await this.transaction.findAll({
       where: {
         _id,
+        account,
       },
     });
 
@@ -42,8 +46,11 @@ export class TransactionRepository
     return (result.at(0) as any).dataValues;
   }
 
-  async find(filters: TransactionFiltersModel): Promise<TransactionModel[]> {
-    let where: WhereOptions<TransactionModel> = {};
+  async find(
+    account: string,
+    filters: TransactionFiltersModel
+  ): Promise<TransactionModel[]> {
+    let where: WhereOptions<TransactionModel> = { account };
     console.log({ filters });
     if (!!filters.amount) where["amount"] = { [Op.between]: filters.amount };
     if (!!filters.type) where["type"] = filters.type;
@@ -63,8 +70,8 @@ export class TransactionRepository
     return result.map((elm) => elm.dataValues);
   }
 
-  async revert(_id: string): Promise<void> {
-    const result = await this.findById(_id);
+  async revert(account: string, _id: string): Promise<void> {
+    const result = await this.findById(account, _id);
     let status = "reverted" as TransactionStatusModel;
     if (result.status == "reverted") status = "active";
     await this.transaction.update(
@@ -72,30 +79,32 @@ export class TransactionRepository
       {
         where: {
           _id,
+          account,
         },
       }
     );
   }
 
-  async get(): Promise<{ amount: string }> {
+  async get(account: string): Promise<{ amount: string }> {
     const [receiptAmount, paymentAmount] = await Promise.all([
       this.transaction.sum("amount", {
-        where: { status: "active", type: "Receipt" },
+        where: { status: "active", type: "Receipt", account },
       }),
       this.transaction.sum("amount", {
-        where: { status: "active", type: "Payment" },
+        where: { status: "active", type: "Payment", account },
       }),
     ]);
 
     return { amount: (receiptAmount - paymentAmount).toString() };
   }
 
-  async delete(_id: string): Promise<void> {
+  async delete(account: string, _id: string): Promise<void> {
     await this.transaction.update(
       { status: "deleted" },
       {
         where: {
           _id,
+          account,
         },
       }
     );

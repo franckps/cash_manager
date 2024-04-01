@@ -7,7 +7,7 @@ const makeSut = (): {
 } => {
   class RevertTransactionRepositoryStub implements RevertTransactionRepository {
     constructor() {}
-    revert(_id: string): Promise<void> {
+    revert(account: string, _id: string): Promise<void> {
       return Promise.resolve();
     }
   }
@@ -25,9 +25,9 @@ describe("DbRevertTransaction UseCase", () => {
   test("Should call RevertTransactionRepository with the correct values", async () => {
     const { sut, revertTransactionRepositoryStub } = makeSut();
     const findSpy = jest.spyOn(revertTransactionRepositoryStub, "revert");
-    await sut.revert("any_id");
+    await sut.revert("any_account", "any_id");
 
-    expect(findSpy).toHaveBeenCalledWith("any_id");
+    expect(findSpy).toHaveBeenCalledWith("any_account", "any_id");
   });
   test("Should throw if RevertTransactionRepository throws", async () => {
     const { sut, revertTransactionRepositoryStub } = makeSut();
@@ -35,13 +35,13 @@ describe("DbRevertTransaction UseCase", () => {
       .spyOn(revertTransactionRepositoryStub, "revert")
       .mockRejectedValue(new Error("any_error"));
     jest.spyOn(sut, "revert");
-    const promiseRejected = sut.revert("any_id");
+    const promiseRejected = sut.revert("any_account", "any_id");
 
     await expect(promiseRejected).rejects.toThrow();
   });
   test("Should return the correct data if succeeded", async () => {
     const { sut } = makeSut();
-    const revertResponse = await sut.revert("any_id");
+    const revertResponse = await sut.revert("any_account", "any_id");
 
     expect(revertResponse).toEqual(undefined);
   });

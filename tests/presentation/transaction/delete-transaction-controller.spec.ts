@@ -7,12 +7,12 @@ interface SutTypes {
 }
 
 const makeTransactionRequest = () => ({
-  params: { id: "123" },
+  params: { id: "123", account: "any_account" },
 });
 
 const makeSut = (): SutTypes => {
   class DeleteTransactionStub implements DeleteTransaction {
-    delete(_id: string): Promise<void> {
+    delete(__: string, _id: string): Promise<void> {
       return Promise.resolve();
     }
   }
@@ -31,7 +31,7 @@ describe("DeleteTransactionController", () => {
     const deleteSpy = jest.spyOn(deleteTransactionStub, "delete");
     sut.handle(makeTransactionRequest());
 
-    expect(deleteSpy).toHaveBeenCalledWith("123");
+    expect(deleteSpy).toHaveBeenCalledWith("any_account", "123");
   });
 
   test("should throw if DeleteTransaction throws", async () => {

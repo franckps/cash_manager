@@ -8,7 +8,7 @@ const makeSut = (): {
 } => {
   class GetTotalAmountRepositoryStub implements GetTotalAmountRepository {
     constructor() {}
-    get(): Promise<TotalAmountModel> {
+    get(account: string): Promise<TotalAmountModel> {
       return Promise.resolve({
         amount: "any_amount",
       });
@@ -28,7 +28,7 @@ describe("DbGetTotalAmount UseCase", () => {
   test("Should call GetTotalAmountRepository", async () => {
     const { sut, getTotalAmountRepositoryStub } = makeSut();
     const findSpy = jest.spyOn(getTotalAmountRepositoryStub, "get");
-    await sut.get();
+    await sut.get("any_account");
 
     expect(findSpy).toHaveBeenCalled;
   });
@@ -38,13 +38,13 @@ describe("DbGetTotalAmount UseCase", () => {
       .spyOn(getTotalAmountRepositoryStub, "get")
       .mockRejectedValue(new Error("any_error"));
     jest.spyOn(sut, "get");
-    const promiseRejected = sut.get();
+    const promiseRejected = sut.get("any_account");
 
     await expect(promiseRejected).rejects.toThrow();
   });
   test("Should return the correct data if succeeded", async () => {
     const { sut } = makeSut();
-    const newTransaction = await sut.get();
+    const newTransaction = await sut.get("any_account");
 
     expect(newTransaction).toEqual({
       amount: "any_amount",

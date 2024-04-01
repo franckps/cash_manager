@@ -6,7 +6,10 @@ export class DeleteTransactionController implements Controller {
   constructor(private readonly deleteTransaction: DeleteTransaction) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    await this.deleteTransaction.delete(request.params.id);
+    await this.deleteTransaction.delete(
+      request.params.account,
+      request.params.id
+    );
     return {
       statusCode: 200,
       body: { success: true },

@@ -7,7 +7,7 @@ const makeSut = (): {
 } => {
   class DeleteTransactionRepositoryStub implements DeleteTransactionRepository {
     constructor() {}
-    delete(_id: string): Promise<void> {
+    delete(account: string, _id: string): Promise<void> {
       return Promise.resolve();
     }
   }
@@ -25,9 +25,9 @@ describe("DbDeleteTransaction UseCase", () => {
   test("Should call DeleteTransactionRepository with the correct values", async () => {
     const { sut, deleteTransactionRepositoryStub } = makeSut();
     const findSpy = jest.spyOn(deleteTransactionRepositoryStub, "delete");
-    await sut.delete("any_id");
+    await sut.delete("any_account", "any_id");
 
-    expect(findSpy).toHaveBeenCalledWith("any_id");
+    expect(findSpy).toHaveBeenCalledWith("any_account", "any_id");
   });
   test("Should throw if DeleteTransactionRepository throws", async () => {
     const { sut, deleteTransactionRepositoryStub } = makeSut();
@@ -35,13 +35,13 @@ describe("DbDeleteTransaction UseCase", () => {
       .spyOn(deleteTransactionRepositoryStub, "delete")
       .mockRejectedValue(new Error("any_error"));
     jest.spyOn(sut, "delete");
-    const promiseRejected = sut.delete("any_id");
+    const promiseRejected = sut.delete("any_account", "any_id");
 
     await expect(promiseRejected).rejects.toThrow();
   });
   test("Should return the correct data if succeeded", async () => {
     const { sut } = makeSut();
-    const deleteResponse = await sut.delete("any_id");
+    const deleteResponse = await sut.delete("any_account", "any_id");
 
     expect(deleteResponse).toEqual(undefined);
   });

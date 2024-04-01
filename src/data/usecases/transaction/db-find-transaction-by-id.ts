@@ -4,7 +4,7 @@ import { FindTransactionByIdRepository } from "../../protocols/db/transaction/fi
 
 export class DbFindTransactionById implements FindTransactionById {
   constructor(private readonly repository: FindTransactionByIdRepository) {}
-  async findById(id: string): Promise<TransactionModel> {
-    return await this.repository.findById(id);
+  async findById(account: string, id: string): Promise<TransactionModel> {
+    return await this.repository.findById(account, id);
   }
 }

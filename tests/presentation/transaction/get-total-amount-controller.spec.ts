@@ -6,9 +6,13 @@ interface SutTypes {
   getTotalAmountSut: GetTotalAmount;
 }
 
+const makeTransactionRequest = () => ({
+  params: { account: "any_account" },
+});
+
 const makeSut = (): SutTypes => {
   class GetTotalAmountSut implements GetTotalAmount {
-    get(): Promise<{ amount: string }> {
+    get(__: string): Promise<{ amount: string }> {
       return Promise.resolve({ amount: "1" });
     }
   }
@@ -23,9 +27,9 @@ describe("GetTotalAmountController", () => {
   test("should call GetTotalAmount correctly", async () => {
     const { sut, getTotalAmountSut } = makeSut();
     const getSpy = jest.spyOn(getTotalAmountSut, "get");
-    sut.handle({});
+    sut.handle(makeTransactionRequest());
 
-    expect(getSpy).toHaveBeenCalled;
+    expect(getSpy).toHaveBeenCalledWith("any_account");
   });
 
   test("should throw if GetTotalAmount throws", async () => {
@@ -33,14 +37,14 @@ describe("GetTotalAmountController", () => {
     jest
       .spyOn(getTotalAmountSut, "get")
       .mockRejectedValue(new Error("any_error"));
-    const promiseRejected = sut.handle({});
+    const promiseRejected = sut.handle(makeTransactionRequest());
 
     await expect(promiseRejected).rejects.toThrow(new Error("any_error"));
   });
 
   test("should return correct data", async () => {
     const { sut } = makeSut();
-    const result = await sut.handle({});
+    const result = await sut.handle(makeTransactionRequest());
 
     expect(result.body.amount).toEqual("1");
   });

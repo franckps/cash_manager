@@ -13,6 +13,7 @@ const makeTransactionRequest = (): {
     title: string;
     description: string;
   };
+  params: { account: string };
 } => ({
   body: {
     amount: "any_amount",
@@ -20,6 +21,7 @@ const makeTransactionRequest = (): {
     title: "any_title",
     description: "any_description",
   },
+  params: { account: "any_account" },
 });
 
 const makeSut = (): {
@@ -29,7 +31,7 @@ const makeSut = (): {
 } => {
   class CreateTransactionStub implements CreateTransaction {
     constructor() {}
-    create(_: TransactionModel): Promise<TransactionModel> {
+    create(__: string, _: TransactionModel): Promise<TransactionModel> {
       return Promise.resolve({
         _id: "any__id",
         amount: "any_amount",
@@ -65,7 +67,7 @@ describe("CreateTransactionController", () => {
     const createSpy = jest.spyOn(createTransactionStub, "create");
     await sut.handle(makeTransactionRequest());
 
-    expect(createSpy).toHaveBeenCalledWith({
+    expect(createSpy).toHaveBeenCalledWith("any_account", {
       amount: "any_amount",
       type: "Payment",
       title: "any_title",

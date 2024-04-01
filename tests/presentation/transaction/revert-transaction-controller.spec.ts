@@ -7,12 +7,12 @@ interface SutTypes {
 }
 
 const makeTransactionRequest = () => ({
-  params: { id: "123" },
+  params: { id: "123", account: "any_account" },
 });
 
 const makeSut = (): SutTypes => {
   class RevertTransactionStub implements RevertTransaction {
-    revert(_id: string): Promise<void> {
+    revert(__: string, _id: string): Promise<void> {
       return Promise.resolve();
     }
   }
@@ -31,7 +31,7 @@ describe("RevertTransactionController", () => {
     const revertSpy = jest.spyOn(revertTransactionStub, "revert");
     sut.handle(makeTransactionRequest());
 
-    expect(revertSpy).toHaveBeenCalledWith("123");
+    expect(revertSpy).toHaveBeenCalledWith("any_account", "123");
   });
 
   test("should throw if RevertTransaction throws", async () => {

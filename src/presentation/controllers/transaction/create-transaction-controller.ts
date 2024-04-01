@@ -13,7 +13,10 @@ export class CreateTransactionController implements Controller {
   ) {}
   async handle(request: HttpRequest): Promise<HttpResponse> {
     this.validator.validate(request.body);
-    const newTransaction = await this.createTransaction.create(request.body);
+    const newTransaction = await this.createTransaction.create(
+      request.params.account,
+      request.body
+    );
     return {
       statusCode: 200,
       body: newTransaction,

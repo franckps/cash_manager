@@ -9,6 +9,7 @@ export interface TransactionFiltersModel {
   type?: TransactionTypeModel;
   title?: string[];
   status?: TransactionStatusModel;
+  account?: string;
 }
 
 export interface FindTransactionByFilters {

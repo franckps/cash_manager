@@ -8,7 +8,7 @@ interface SutTypes {
 }
 
 const makeTransactionRequest = () => ({
-  params: { id: "any__id" },
+  params: { id: "any__id", account: "any_account" },
 });
 
 const transactionResult: TransactionModel = {
@@ -22,7 +22,7 @@ const transactionResult: TransactionModel = {
 
 const makeSut = (): SutTypes => {
   class FindTransactionByIdStub implements FindTransactionById {
-    findById(_id: string): Promise<TransactionModel> {
+    findById(__: string, _id: string): Promise<TransactionModel> {
       return Promise.resolve(transactionResult);
     }
   }
@@ -41,7 +41,7 @@ describe("FindTransactionByIdController", () => {
     const revertSpy = jest.spyOn(findTransactionByIdStub, "findById");
     sut.handle(makeTransactionRequest());
 
-    expect(revertSpy).toHaveBeenCalledWith("any__id");
+    expect(revertSpy).toHaveBeenCalledWith("any_account", "any__id");
   });
 
   test("should throw if FindTransactionById throws", async () => {

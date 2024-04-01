@@ -3,7 +3,7 @@ import { DeleteTransactionRepository } from "../../protocols/db/transaction/dele
 
 export class DbDeleteTransaction implements DeleteTransaction {
   constructor(private readonly repository: DeleteTransactionRepository) {}
-  async delete(id: string): Promise<void> {
-    await this.repository.delete(id);
+  async delete(account: string, id: string): Promise<void> {
+    await this.repository.delete(account, id);
   }
 }

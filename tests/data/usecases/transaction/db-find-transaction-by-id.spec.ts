@@ -10,7 +10,7 @@ const makeSut = (): {
     implements FindTransactionByIdRepository
   {
     constructor() {}
-    findById(_id: string): Promise<TransactionModel> {
+    findById(account: string, _id: string): Promise<TransactionModel> {
       return Promise.resolve({
         _id: "1-2-3-4-5",
         amount: "any_amount",
@@ -36,9 +36,9 @@ describe("DbFindTransactionById UseCase", () => {
   test("Should call FindTransactionByIdRepository with the correct values", async () => {
     const { sut, findTransactionByIdRepositoryStub } = makeSut();
     const findSpy = jest.spyOn(findTransactionByIdRepositoryStub, "findById");
-    await sut.findById("any_id");
+    await sut.findById("any_account", "any_id");
 
-    expect(findSpy).toHaveBeenCalledWith("any_id");
+    expect(findSpy).toHaveBeenCalledWith("any_account", "any_id");
   });
   test("Should throw if FindTransactionByIdRepository throws", async () => {
     const { sut, findTransactionByIdRepositoryStub } = makeSut();
@@ -46,13 +46,13 @@ describe("DbFindTransactionById UseCase", () => {
       .spyOn(findTransactionByIdRepositoryStub, "findById")
       .mockRejectedValue(new Error("any_error"));
     jest.spyOn(sut, "findById");
-    const promiseRejected = sut.findById("any_id");
+    const promiseRejected = sut.findById("any_account", "any_id");
 
     await expect(promiseRejected).rejects.toThrow();
   });
   test("Should return the correct data if succeeded", async () => {
     const { sut } = makeSut();
-    const newTransaction = await sut.findById("any_id");
+    const newTransaction = await sut.findById("any_account", "any_id");
 
     expect(newTransaction).toEqual({
       _id: "1-2-3-4-5",

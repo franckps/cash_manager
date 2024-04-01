@@ -22,12 +22,15 @@ const makeSut = (): {
     implements FindTransactionByFiltersRepository
   {
     constructor() {}
-    find(_: {
-      type?: "Receipt" | "Payment";
-      amount?: [string, string];
-      title?: string[];
-      status?: "active" | "reverted";
-    }): Promise<TransactionModel[]> {
+    find(
+      account: string,
+      _: {
+        type?: "Receipt" | "Payment";
+        amount?: [string, string];
+        title?: string[];
+        status?: "active" | "reverted";
+      }
+    ): Promise<TransactionModel[]> {
       return Promise.resolve([
         {
           _id: "1-2-3-4-5",
@@ -57,9 +60,9 @@ describe("DbFindTransactionByFilters UseCase", () => {
   test("Should call FindTransactionByFiltersRepository with the correct values", async () => {
     const { sut, findTransactionByFiltersRepositoryStub } = makeSut();
     const findSpy = jest.spyOn(findTransactionByFiltersRepositoryStub, "find");
-    await sut.find(makeTransactionFilter());
+    await sut.find("any_account", makeTransactionFilter());
 
-    expect(findSpy).toHaveBeenCalledWith({
+    expect(findSpy).toHaveBeenCalledWith("any_account", {
       amount: ["any_amount", "other_amount"],
       type: "Payment",
       title: ["any_title"],
@@ -72,13 +75,16 @@ describe("DbFindTransactionByFilters UseCase", () => {
       .spyOn(findTransactionByFiltersRepositoryStub, "find")
       .mockRejectedValue(new Error("any_error"));
     jest.spyOn(sut, "find");
-    const promiseRejected = sut.find(makeTransactionFilter());
+    const promiseRejected = sut.find("any_account", makeTransactionFilter());
 
     await expect(promiseRejected).rejects.toThrow();
   });
   test("Should return the correct data if succeeded", async () => {
     const { sut } = makeSut();
-    const newTransaction = await sut.find(makeTransactionFilter());
+    const newTransaction = await sut.find(
+      "any_account",
+      makeTransactionFilter()
+    );
 
     expect(newTransaction).toEqual([
       {

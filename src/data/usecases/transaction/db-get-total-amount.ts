@@ -4,7 +4,7 @@ import { GetTotalAmountRepository } from "../../protocols/db/transaction/get-tot
 
 export class DbGetTotalAmount implements GetTotalAmount {
   constructor(private readonly repository: GetTotalAmountRepository) {}
-  async get(): Promise<TotalAmountModel> {
-    return await this.repository.get();
+  async get(account: string): Promise<TotalAmountModel> {
+    return await this.repository.get(account);
   }
 }

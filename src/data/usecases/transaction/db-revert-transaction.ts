@@ -3,7 +3,7 @@ import { RevertTransactionRepository } from "../../protocols/db/transaction/reve
 
 export class DbRevertTransaction implements RevertTransaction {
   constructor(private readonly repository: RevertTransactionRepository) {}
-  async revert(id: string): Promise<void> {
-    return await this.repository.revert(id);
+  async revert(account: string, id: string): Promise<void> {
+    return await this.repository.revert(account, id);
   }
 }

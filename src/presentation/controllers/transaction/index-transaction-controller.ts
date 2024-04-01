@@ -9,6 +9,7 @@ export class FindTransactionByFiltersController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
     console.log({ query: request.query });
     const transactionList = await this.findTransactionByFilters.find(
+      request.params.account,
       request.query
     );
     return {
