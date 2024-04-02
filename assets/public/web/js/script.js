@@ -3,27 +3,29 @@ const transactionData = {
   filterData: [],
   filterString: "",
   sortArray: ["", ""],
-  update: async function () {
-    this.data = await this.fetchTransactions();
+  account: null,
+  update: async function (account) {
+    this.account = account;
+    this.data = await this.fetchTransactions(account);
     this.filter();
   },
-  revert: async function (id, action) {
+  revert: async function (account, id, action) {
     const confirmation = this.askConfirmation(
       `Deseja realmente ${action ? action : "reverter"} essa transação?`
     );
     if (!confirmation) return;
-    this.data = await this.revertTransaction(id);
-    await this.update();
+    this.data = await this.revertTransaction(account, id);
+    await this.update(account);
   },
-  delete: async function (id) {
+  delete: async function (account, id) {
     const confirmation = this.askConfirmation(
       "Deseja realmente excluir permanentemente essa transação?"
     );
     if (!confirmation) return;
-    this.data = await this.deleteTransaction(id);
-    await this.update();
+    this.data = await this.deleteTransaction(account, id);
+    await this.update(account);
   },
-  create: function (formId) {
+  create: function (account, formId) {
     try {
       const form = document.getElementById(formId);
       const requestObject = {
@@ -32,8 +34,8 @@ const transactionData = {
         title: form["input-title"].value,
         description: form["input-description"].value,
       };
-      this.createTransaction(requestObject).then(async () => {
-        await this.update();
+      this.createTransaction(account, requestObject).then(async () => {
+        await this.update(account);
         this.closePopupCreateTransaction();
       });
     } catch (err) {
@@ -158,9 +160,9 @@ const transactionData = {
             <p class="col5" title="${this.formatAmount(
               itemData.amount
             )}">${this.formatAmount(itemData.amount)}</p>
-            <p class="btn-section hidden col6" onclick="openButtonMenu(this, '${
-              itemData._id
-            }', ${
+            <p class="btn-section hidden col6" onclick="openButtonMenu(this, ${
+              itemData.account
+            }, '${itemData._id}', ${
       itemData.status == "active" ? "true, false, false" : "false, true, true"
     }, {title: '${itemData.title}', createdAt: '${itemData.createdAt}',type: '${
       itemData.type
@@ -174,27 +176,33 @@ const transactionData = {
     const filterField = document.getElementById("filter");
     this.filterString = filterField.value;
   },
-  fetchTransactions: async function () {
-    const request = await fetch("/api/v1/");
+  fetchTransactions: async function (account) {
+    const request = await fetch(`/api/v1/account/${account}/transaction/`);
     const result = await request.json();
     return result.body;
   },
-  revertTransaction: async function (id) {
-    const request = await fetch("/api/v1/" + id + "/revert", {
-      method: "PATCH",
-    });
+  revertTransaction: async function (account, id) {
+    const request = await fetch(
+      `/api/v1/account/${account}/transaction/${id}/revert`,
+      {
+        method: "PATCH",
+      }
+    );
     const result = await request.json();
     return result.body;
   },
-  deleteTransaction: async function (id) {
-    const request = await fetch("/api/v1/" + id, {
-      method: "DELETE",
-    });
+  deleteTransaction: async function (account, id) {
+    const request = await fetch(
+      `/api/v1/account/${account}/transaction/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     const result = await request.json();
     return result.body;
   },
-  createTransaction: async function (transactionData) {
-    const request = await fetch("/api/v1/", {
+  createTransaction: async function (account, transactionData) {
+    const request = await fetch(`/api/v1/account/${account}/transaction`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -238,14 +246,14 @@ const transactionData = {
     const popupScreen = document.getElementById("popup-screen");
     popupScreen.classList.add("hidden");
   },
-  openPopupCreateTransaction: function () {
+  openPopupCreateTransaction: function (account = this.account) {
     closeAllButtomMenus();
     const htmlContent = `<p class="popup-title">
     Nova Transação
     <button type="button" onclick="transactionData.closePopupCreateTransaction()">+</button>
 </p>
 <fieldset class="popup-main">
-    <form action="/api/v1/" method="post" id="transaction-form" onsubmit="return transactionData.create('transaction-form')">
+    <form action="/api/v1/account/${account}/transaction" method="post" id="transaction-form" onsubmit="return transactionData.create('${account}','transaction-form')">
             <p class="input-container">
                 <label for="input-title">Nome</label>
                 <input type="text" name="title" id="input-title">
@@ -283,6 +291,7 @@ const transactionData = {
 let currentlyOpenedBy = null;
 const openButtonMenu = async (
   elm,
+  account,
   id,
   extornar,
   excluir,
@@ -314,15 +323,15 @@ const openButtonMenu = async (
 
   itemsMenuRestore.onclick = () => {
     closeAllButtomMenus();
-    transactionData.revert(id, "restaurar");
+    transactionData.revert(account, id, "restaurar");
   };
   itemsMenuRevert.onclick = () => {
     closeAllButtomMenus();
-    transactionData.revert(id, "reverter");
+    transactionData.revert(account, id, "reverter");
   };
   itemsMenuExclude.onclick = () => {
     closeAllButtomMenus();
-    transactionData.delete(id);
+    transactionData.delete(account, id);
   };
   itemsMenuDetail.onclick = () => {
     closeAllButtomMenus();
@@ -355,4 +364,9 @@ const awaitSecounds = async (secs = 1) => {
   });
 };
 
-transactionData.update();
+//transactionData.update();
+
+const params = new URL(document.location.toString()).searchParams;
+const account = params.get("account");
+
+if (!!account) transactionData.update(account);
