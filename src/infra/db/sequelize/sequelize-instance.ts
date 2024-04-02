@@ -35,6 +35,10 @@ export const Transaction: ModelDefined<TransactionModel, TransactionModel> =
       type: DataTypes.STRING,
       allowNull: false,
     },
+    account: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+    },
   });
 
 export const Account: ModelDefined<AccountModel, AccountModel> =
