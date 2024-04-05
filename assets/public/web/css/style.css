@@ -1,0 +1,67 @@
+html, body, * {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #656565;
+    background-color: #fff;
+}
+
+html, body {
+    background-color: rgb(240, 240, 240)
+}
+
+button {
+    cursor: pointer;
+}
+
+header.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .4rem 2rem;
+    box-shadow: 0 0 7px #999;
+    font-weight: 600;
+}
+
+header.title button {
+    background-color: rgb(12, 156, 72);
+    padding: .4em 1em;
+    border-radius: 2rem;
+    color: #FFF;
+    font-weight: 600px;
+}
+header.title span {
+    font-size: 1.2em;
+    font-weight: 600px;
+    color: #FFF;
+    background-color: transparent;
+}
+
+main, section {
+    background-color: transparent;
+}
+
+main {
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+main section {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+main section article {
+    display: inline-block;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: 0 0 15px #bbb;
+}
+main section article:hover {
+    box-shadow: 0 0 7px #bbb;
+}
