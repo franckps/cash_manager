@@ -41,7 +41,7 @@ module.exports = {
             allowNull: false,
           },
           account: {
-            type: Sequelize.DataTypes.DOUBLE,
+            type: Sequelize.DataTypes.STRING,
             allowNull: false,
           },
         })
