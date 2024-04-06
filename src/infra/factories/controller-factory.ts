@@ -20,11 +20,12 @@ import { DeleteAccountController } from "../../presentation/controllers/account/
 import { DbDeleteAccount } from "../../data/usecases/account/db-delete-account";
 import { FindAllAccountController } from "../../presentation/controllers/account/find-all-account-controller";
 import { DbFindAllAccount } from "../../data/usecases/account/db-find-all-account";
+import sequelize from "sequelize";
 
 const transactionRepository = new TransactionRepository(Transaction);
 const createTransactionValidator = new CreateTransactionValidator();
 
-const accountRepository = new AccountRepository(Account);
+const accountRepository = new AccountRepository(Account, sequelize);
 
 export const buildCreateTransactionController = () => {
   return new CreateTransactionController(

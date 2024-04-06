@@ -48,6 +48,10 @@ export const Account: ModelDefined<AccountModel, AccountModel> =
       allowNull: false,
       primaryKey: true,
     },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
