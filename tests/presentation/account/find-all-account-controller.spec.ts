@@ -5,10 +5,12 @@ import { FindAllAccountController } from "../../../src/presentation/controllers/
 const makeAccountRequest = (): {
   body: {
     account: string;
+    title: string;
   };
 } => ({
   body: {
     account: "any_account",
+    title: "Test Account",
   },
 });
 
@@ -23,6 +25,8 @@ const makeSut = (): {
         {
           account: "any_account",
           status: "active",
+          totalValue: 1,
+          title: "Test Account",
         },
       ]);
     }
@@ -65,6 +69,8 @@ describe("FindAllAccountController", () => {
         {
           account: "any_account",
           status: "active",
+          totalValue: 1,
+          title: "Test Account",
         },
       ],
     });

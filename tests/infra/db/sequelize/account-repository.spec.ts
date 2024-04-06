@@ -1,9 +1,12 @@
+import Sequelize from "sequelize";
 import { AccountModel } from "../../../../src/domain/models/account";
 import { AccountRepository } from "../../../../src/infra/db/sequelize/account-repository";
 
 const accountModel: AccountModel = {
   account: "1",
   status: "active",
+  totalValue: 1,
+  title: "Test Account",
 };
 
 interface Account {
@@ -31,6 +34,7 @@ interface Account {
 interface SutTypes {
   sut: AccountRepository;
   accountStub: Account;
+  sequelizeStub: typeof Sequelize;
 }
 
 const makeAccountStub = () => {
@@ -66,11 +70,18 @@ const makeAccountStub = () => {
   return new AccountStub();
 };
 
+const makeSequelizeStub = (): typeof Sequelize => {
+  return {
+    literal: (query: string): any => null,
+  } as typeof Sequelize;
+};
+
 const makeSut = (): SutTypes => {
   const accountStub = makeAccountStub();
-  const sut = new AccountRepository(accountStub as any);
+  const sequelizeStub = makeSequelizeStub();
+  const sut = new AccountRepository(accountStub as any, sequelizeStub);
 
-  return { sut, accountStub };
+  return { sut, accountStub, sequelizeStub };
 };
 
 describe("Sequelize AccountRepository", () => {
@@ -108,11 +119,32 @@ describe("Sequelize AccountRepository", () => {
 
   describe("#findAll", () => {
     test("should call Account.findAll correctly", async () => {
-      const { sut, accountStub } = makeSut();
+      const { sut, accountStub, sequelizeStub } = makeSut();
       const findAllSpy = jest.spyOn(accountStub, "findAll");
+      const lirealSpy = jest.spyOn(sequelizeStub, "literal");
       await sut.findAll();
 
-      expect(findAllSpy).toBeCalledWith({ where: { status: "active" } });
+      expect(findAllSpy).toBeCalledWith({
+        where: { status: "active" },
+        attributes: {
+          include: [[null, "totalValue"]],
+        },
+      });
+      expect(lirealSpy).toBeCalledWith(`(SELECT SUM(amount) as amount FROM (
+        SELECT SUM(amount) as amount
+        FROM transactions
+        WHERE
+          status = 'active'
+          AND type = 'Receipt'
+          AND account = account.account
+        UNION
+        SELECT SUM(amount * -1) as amount
+          FROM transactions
+          WHERE
+            status = 'active'
+            AND type = 'Payment'
+            AND account = account.account
+      ))`);
     });
   });
 });

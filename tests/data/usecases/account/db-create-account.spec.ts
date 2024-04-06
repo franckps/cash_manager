@@ -11,7 +11,12 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   class CreateAccountRepositoryStub implements CreateAccountRepository {
     async create(account: AccountModel): Promise<AccountModel> {
-      return Promise.resolve({ account: "123", status: "active" });
+      return Promise.resolve({
+        account: "123",
+        status: "active",
+        totalValue: 1,
+        title: "Test Account",
+      });
     }
   }
 
@@ -25,14 +30,19 @@ describe("#DbCreateAccount", () => {
   test("Should call CreateAccountRepository with correct value", async () => {
     const { sut, createAccountRepositoryStub } = makeSut();
     const createSpy = jest.spyOn(createAccountRepositoryStub, "create");
-    await sut.create({ account: "123" });
-    expect(createSpy).toBeCalledWith({ account: "123" });
+    await sut.create({ account: "123", title: "Test Account" });
+    expect(createSpy).toBeCalledWith({ account: "123", title: "Test Account" });
   });
 
   test("Should return the new account on  success", async () => {
     const { sut } = makeSut();
 
-    const result = await sut.create({ account: "123" });
-    expect(result).toEqual({ account: "123", status: "active" });
+    const result = await sut.create({ account: "123", title: "Test Account" });
+    expect(result).toEqual({
+      account: "123",
+      status: "active",
+      totalValue: 1,
+      title: "Test Account",
+    });
   });
 });

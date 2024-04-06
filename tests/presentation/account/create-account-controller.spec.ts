@@ -5,10 +5,12 @@ import { CreateAccountController } from "../../../src/presentation/controllers/a
 const makeAccountRequest = (): {
   body: {
     account: string;
+    title: string;
   };
 } => ({
   body: {
     account: "any_account",
+    title: "Test Account",
   },
 });
 
@@ -22,6 +24,8 @@ const makeSut = (): {
       return Promise.resolve({
         account: "any_account",
         status: "active",
+        totalValue: 1,
+        title: "Test Account",
       });
     }
   }
@@ -44,6 +48,7 @@ describe("CreateAccountController", () => {
 
     expect(createSpy).toHaveBeenCalledWith({
       account: "any_account",
+      title: "Test Account",
     });
   });
   test("Should throw if CreateAccount throws", async () => {
@@ -64,6 +69,8 @@ describe("CreateAccountController", () => {
       body: {
         account: "any_account",
         status: "active",
+        totalValue: 1,
+        title: "Test Account",
       },
     });
   });

@@ -11,7 +11,14 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   class FindAllAccountRepositoryStub implements FindAllAccountRepository {
     async findAll(): Promise<AccountModel[]> {
-      return Promise.resolve([{ account: "123", status: "active" }]);
+      return Promise.resolve([
+        {
+          account: "123",
+          status: "active",
+          totalValue: 1,
+          title: "Test Account",
+        },
+      ]);
     }
   }
 
@@ -33,6 +40,13 @@ describe("#DbFindAllAccount", () => {
     const { sut } = makeSut();
 
     const result = await sut.findAll();
-    expect(result).toEqual([{ account: "123", status: "active" }]);
+    expect(result).toEqual([
+      {
+        account: "123",
+        status: "active",
+        totalValue: 1,
+        title: "Test Account",
+      },
+    ]);
   });
 });
