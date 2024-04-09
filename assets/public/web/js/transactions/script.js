@@ -61,11 +61,11 @@ const transactionData = {
       let valoresJoined =
         Object.values(element).join(" ") +
         " " +
-        this.formatDate(element.createdAt) +
+        formatDate(element.createdAt) +
         " " +
-        this.formatType(element.type) +
+        formatType(element.type) +
         " " +
-        this.formatAmount(element.amount);
+        formatAmount(element.amount);
 
       valoresJoined = valoresJoined.toLowerCase();
       const strFilter = this.filterString.toLowerCase();
@@ -81,27 +81,6 @@ const transactionData = {
       .map((element) => this.generateItemHTML(element))
       .join("");
     mainContent.innerHTML = itemsHTML;
-  },
-  formatDate: function (stringDate) {
-    let dateString = stringDate.split(" +00:00")[0];
-    const datetime = new Date(dateString);
-
-    const [day, month, year, hour, minutes, secounds] = [
-      datetime.getDate(),
-      datetime.getMonth(),
-      datetime.getFullYear(),
-      datetime.getHours(),
-      datetime.getMinutes(),
-      datetime.getSeconds(),
-    ];
-
-    return `${day}/${month + 1}/${year} ${hour}:${minutes}:${secounds}`;
-  },
-  formatType: function (type) {
-    return type == "Receipt" ? "ENTRADA" : "SAÍDA";
-  },
-  formatAmount: function (amount) {
-    return `R$ ${amount}`;
   },
   generateTransactionDetail: function ({
     title,
@@ -122,15 +101,15 @@ const transactionData = {
     </article>
     <article>
         <h3>Tipo</h3>
-        <p>${this.formatType(type)}</p>
+        <p>${formatType(type)}</p>
     </article>
     <article>
         <h3>Data e hora</h3>
-        <p>${this.formatDate(createdAt)}</p>
+        <p>${formatDate(createdAt)}</p>
     </article>
     <article>
         <h3>Valor</h3>
-        <p>${this.formatAmount(amount)}</p>
+        <p>${formatAmount(amount)}</p>
     </article>
     <article>
         <h3>Estado atual</h3>
@@ -148,18 +127,18 @@ const transactionData = {
           itemData.status == "reverted" ? "reverted" : ""
         } ${itemData.type.toLowerCase()}">
             <p class="col1" title="${itemData.title}">${itemData.title}</p>
-            <p class="col2"><span class="${itemData.type.toLowerCase()}">${this.formatType(
+            <p class="col2"><span class="${itemData.type.toLowerCase()}">${formatType(
       itemData.type
     )}</span></p>
-            <p class="col3" title="${this.formatDate(
+            <p class="col3" title="${formatDate(
               itemData.createdAt
-            )}">${this.formatDate(itemData.createdAt)}</p>
+            )}">${formatDate(itemData.createdAt)}</p>
             <p class="col4" title="${itemData.description}">${
       itemData.description
     }</p>
-            <p class="col5" title="${this.formatAmount(
+            <p class="col5" title="${formatAmount(
               itemData.amount
-            )}">${this.formatAmount(itemData.amount)}</p>
+            )}">${formatAmount(itemData.amount)}</p>
             <p class="btn-section hidden col6" onclick="openButtonMenu(this, ${
               itemData.account
             }, '${itemData._id}', ${
