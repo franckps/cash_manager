@@ -18,6 +18,7 @@ const accountData = {
   fetchAccounts: async function () {
     const request = await fetch(`/api/v1/account/`);
     const result = await request.json();
+    console.log(result.body);
     return result.body;
   },
   deleteTransaction: async function (account) {
@@ -40,4 +41,4 @@ const accountData = {
   },
 };
 
-accountData.update(account);
+accountData.update();
