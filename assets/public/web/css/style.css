@@ -54,13 +54,19 @@ main section {
     flex-direction: row;
     gap: 1rem;
 }
-
+main section a {
+    text-decoration: none;
+}
 main section article {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
     padding: 1rem 1.5rem;
     border-radius: 4px;
-    text-decoration: none;
     box-shadow: 0 0 15px #bbb;
+}
+main section article .value {
+    opacity: .5;
 }
 main section article:hover {
     box-shadow: 0 0 7px #bbb;
