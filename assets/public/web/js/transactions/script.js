@@ -216,14 +216,10 @@ const transactionData = {
   openPopupTransactionDetail: function (transaction) {
     closeAllButtomMenus();
     const htmlContent = this.generateTransactionDetail(transaction);
-    document.querySelector("#popup-screen .popup-content").innerHTML =
-      htmlContent;
-    const popupScreen = document.getElementById("popup-screen");
-    popupScreen.classList.remove("hidden");
+    openPopup(htmlContent);
   },
   closePopupTransactionDetail: function () {
-    const popupScreen = document.getElementById("popup-screen");
-    popupScreen.classList.add("hidden");
+    closePopup();
   },
   openPopupCreateTransaction: function (account = this.account) {
     closeAllButtomMenus();
@@ -257,14 +253,10 @@ const transactionData = {
             </p>
     </form>
 </fieldset>`;
-    document.querySelector("#popup-screen .popup-content").innerHTML =
-      htmlContent;
-    const popupScreen = document.getElementById("popup-screen");
-    popupScreen.classList.remove("hidden");
+    openPopup(htmlContent);
   },
   closePopupCreateTransaction: function () {
-    const popupScreen = document.getElementById("popup-screen");
-    popupScreen.classList.add("hidden");
+    closePopup();
   },
 };
 let currentlyOpenedBy = null;

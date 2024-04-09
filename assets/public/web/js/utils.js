@@ -25,3 +25,22 @@ const formatAmount = function (amount) {
   });
   return formatter.format(amount);
 };
+
+const openPopup = function (htmlContent) {
+  document.querySelector("#popup-screen .popup-content").innerHTML =
+    htmlContent;
+  const popupScreen = document.getElementById("popup-screen");
+  popupScreen.classList.remove("hidden");
+};
+
+const closePopup = function () {
+  const popupScreen = document.getElementById("popup-screen");
+  popupScreen.classList.add("hidden");
+};
+
+const section = document.createElement("section");
+section.id = "popup-screen";
+section.classList.add("popup-screen");
+section.classList.add("hidden");
+section.innerHTML = '<main class="popup-content"></main>';
+document.body.appendChild(section);
