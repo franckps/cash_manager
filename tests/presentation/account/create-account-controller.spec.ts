@@ -1,6 +1,8 @@
 import { CreateAccount } from "../../../src/domain/usecases/account/create-account";
 import { AccountModel } from "../../../src/domain/models/account";
 import { CreateAccountController } from "../../../src/presentation/controllers/account/create-account-controller";
+import { Validator } from "../../../src/presentation/protocols/validator";
+import { CreateAccountModel } from "../../../src/domain/usecases/account/create-account";
 
 const makeAccountRequest = (): {
   body: {
@@ -17,6 +19,7 @@ const makeAccountRequest = (): {
 const makeSut = (): {
   sut: CreateAccountController;
   createAccountStub: CreateAccount;
+  validatorStub: Validator<CreateAccountModel>;
 } => {
   class CreateAccountStub implements CreateAccount {
     constructor() {}
@@ -30,10 +33,15 @@ const makeSut = (): {
     }
   }
 
-  const createAccountStub = new CreateAccountStub();
-  const sut = new CreateAccountController(createAccountStub);
+  class ValidatorStub implements Validator<CreateAccountModel> {
+    validate(data: CreateAccountModel): void {}
+  }
 
-  return { sut, createAccountStub };
+  const validatorStub = new ValidatorStub();
+  const createAccountStub = new CreateAccountStub();
+  const sut = new CreateAccountController(createAccountStub, validatorStub);
+
+  return { sut, createAccountStub, validatorStub };
 };
 
 describe("CreateAccountController", () => {
@@ -73,5 +81,14 @@ describe("CreateAccountController", () => {
         title: "Test Account",
       },
     });
+  });
+  test("Should throw if Validator throws", async () => {
+    const { sut, validatorStub } = makeSut();
+    jest.spyOn(validatorStub, "validate").mockImplementation(() => {
+      throw new Error("any_error");
+    });
+    const promiseRejected = sut.handle(makeAccountRequest());
+
+    await expect(promiseRejected).rejects.toThrow(new Error("any_error"));
   });
 });
