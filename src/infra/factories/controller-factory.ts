@@ -12,7 +12,10 @@ import { RevertTransactionController } from "../../presentation/controllers/tran
 import { DeleteTransactionController } from "../../presentation/controllers/transaction/delete-transaction-controller";
 import { FindTransactionByIdController } from "../../presentation/controllers/transaction/find-transaction-by-id-controller";
 import { DbFindTransactionById } from "../../data/usecases/transaction/db-find-transaction-by-id";
-import { CreateTransactionValidator } from "../../utils/validators";
+import {
+  CreateTransactionValidator,
+  CreateAccountValidator,
+} from "../../utils/validators";
 import { AccountRepository } from "../db/sequelize/account-repository";
 import { CreateAccountController } from "../../presentation/controllers/account/create-account-controller";
 import { DbCreateAccount } from "../../data/usecases/account/db-create-account";
@@ -26,6 +29,7 @@ const transactionRepository = new TransactionRepository(Transaction);
 const createTransactionValidator = new CreateTransactionValidator();
 
 const accountRepository = new AccountRepository(Account, sequelize);
+const createAccountValidator = new CreateAccountValidator();
 
 export const buildCreateTransactionController = () => {
   return new CreateTransactionController(
@@ -65,7 +69,10 @@ export const buildDeleteTransactionController = () => {
 };
 
 export const buildCreateAccountController = () => {
-  return new CreateAccountController(new DbCreateAccount(accountRepository));
+  return new CreateAccountController(
+    new DbCreateAccount(accountRepository),
+    createAccountValidator
+  );
 };
 
 export const buildDeleteAccountController = () => {
