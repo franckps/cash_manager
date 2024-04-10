@@ -21,6 +21,21 @@ html, body {
     background-color: rgb(240, 240, 240)
 }
 
+.back-arrow {
+    text-decoration: none;
+    padding: .3rem;
+    height: 2rem;
+    width: 2rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-weight: 100;
+    box-shadow: 0 0 5px #ccc;
+}
+.back-arrow:hover {
+    box-shadow: 0 0 1px #ccc;
+}
+
 button {
     cursor: pointer;
 }

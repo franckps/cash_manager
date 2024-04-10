@@ -5,6 +5,7 @@ const transactionData = {
   sortArray: ["", ""],
   account: null,
   update: async function (account) {
+    document.title = "Transações | " + account;
     this.account = account;
     this.data = await this.fetchTransactions(account);
     this.filter();
@@ -334,8 +335,6 @@ const awaitSecounds = async (secs = 1) => {
     }, secs * 1000);
   });
 };
-
-//transactionData.update();
 
 const params = new URL(document.location.toString()).searchParams;
 const account = params.get("account");
