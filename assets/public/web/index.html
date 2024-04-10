@@ -3,66 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Transações</title>
     <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
+    <title>Todas as Contas</title>
 </head>
 <body>
     <header class="title">
-        <p>Transações</p>
-        <button type="button" onclick="transactionData.openPopupCreateTransaction()"><span>⨁</span> NOVA</button>
+        <p>Contas</p>
+        <button type="button" onclick="accountData.openPopupCreateAccount()"><span>⨁</span> NOVA</button>
     </header>
-    <div class="transaction-list">
-        <header class="header">
-            <section class="header-filter">
-                <input id="filter" class="filter-field" type="text" placeholder="Pesquisar por transações..." />
-                <button class="filter-button" onclick="transactionData.filter()">
-                    <?xml version="1.0" encoding="utf-8"?>
-                    <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                    <svg fill="#ffffff" width="16px" height="16px" style="background-color: transparent;" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <title>bars-filter</title>
-                    <path d="M30 6.749h-28c-0.69 0-1.25 0.56-1.25 1.25s0.56 1.25 1.25 1.25v0h28c0.69 0 1.25-0.56 1.25-1.25s-0.56-1.25-1.25-1.25v0zM24 14.75h-16c-0.69 0-1.25 0.56-1.25 1.25s0.56 1.25 1.25 1.25v0h16c0.69 0 1.25-0.56 1.25-1.25s-0.56-1.25-1.25-1.25v0zM19 22.75h-6.053c-0.69 0-1.25 0.56-1.25 1.25s0.56 1.25 1.25 1.25v0h6.053c0.69 0 1.25-0.56 1.25-1.25s-0.56-1.25-1.25-1.25v0z"></path>
-                    </svg>
-                </button>
-            </section>
-            <section class="header-columns">
-                <p class="col1"><span>Transação</span> <span class="sort-buttons">
-                    <button type="button" onclick="transactionData.filter('title', 'asc')">▲</button>
-                    <button type="button" onclick="transactionData.filter('title', 'des')">▼</button>
-                </span></p>
-                <p class="col2"><span>Tipo</span> <span class="sort-buttons">
-                    <button type="button" onclick="transactionData.sort('type', 'asc')">▲</button>
-                    <button type="button" onclick="transactionData.sort('type', 'des')">▼</button>
-                </span></p>
-                <p class="col3"><span>Data</span> <span class="sort-buttons">
-                    <button type="button" onclick="transactionData.sort('createdAt', 'asc')">▲</button>
-                    <button type="button" onclick="transactionData.sort('createdAt', 'des')">▼</button>
-                </span></p>
-                <p class="col4"><span>Descrição</span> <span class="sort-buttons">
-                    <button type="button" onclick="transactionData.sort('description', 'asc')">▲</button>
-                    <button type="button" onclick="transactionData.sort('description', 'des')">▼</button>
-                </span></p>
-                <p class="col5"><span>Valor</span> <span class="sort-buttons">
-                    <button type="button" onclick="transactionData.sort('amount', 'asc')">▲</button>
-                    <button type="button" onclick="transactionData.sort('amount', 'des')">▼</button>
-                </span></p>
-                <p class="col6"></p>
-            </section>
-        </header>
-        <main class="content" id="content"></main>
-        <menu id="items-menu" class="items-menu hidden">
-            <button id="items-menu-detail" class="hidden" type="button"><span>⨁</span>Detalhes</button>
-            <button id="items-menu-restore" class="hidden" type="button"><span>⨁</span>Resaurar</button>
-            <button id="items-menu-revert" class="hidden" type="button"><span>⨁</span>Extornar</button>
-            <button id="items-menu-exclude" class="hidden" type="button"><span>⨁</span>Excluir</button>
-        </menu>
-    </div>
-
-    <section id="popup-screen" class="popup-screen hidden">
-        <main class="popup-content">
-            
-        </main>
-    </section>
+    <main>
+        <section id="content">
+        </section>
+    </main>
+    <script src="js/utils.js"></script>
+    <script src="js/script.js"></script>
 </body>
-<script src="js/script.js"></script>
 </html>

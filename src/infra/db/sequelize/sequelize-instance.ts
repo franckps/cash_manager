@@ -1,5 +1,6 @@
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
 import { TransactionModel } from "src/domain/models/transaction";
+import { AccountModel } from "src/domain/models/account";
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -29,6 +30,27 @@ export const Transaction: ModelDefined<TransactionModel, TransactionModel> =
     description: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    account: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+    },
+  });
+
+export const Account: ModelDefined<AccountModel, AccountModel> =
+  sequelize.define("Account", {
+    account: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,

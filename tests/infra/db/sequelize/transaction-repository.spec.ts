@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { TransactionModel } from "../../../../src/domain/models/transaction";
-import { TransactionFiltersModel } from "../../../../src/domain/usecases/find-transaction-by-filters";
+import { TransactionFiltersModel } from "../../../../src/domain/usecases/transaction/find-transaction-by-filters";
 import { TransactionRepository } from "../../../../src/infra/db/sequelize/transaction-repository";
 
 const transactionModel: TransactionModel = {
@@ -21,6 +21,7 @@ interface Transaction {
       type: string;
       title: any;
       status: string;
+      account: string;
     };
   }): Promise<{
     at: (ky: number) => { dataValues: TransactionModel };
@@ -31,12 +32,13 @@ interface Transaction {
     filter: {
       where: {
         _id: string;
+        account: string;
       };
     }
   ): Promise<{ dataValues: TransactionModel }>;
   sum(
     property: string,
-    filter: { where: { status: string; type: string } }
+    filter: { where: { status: string; type: string; account: string } }
   ): Promise<number>;
 }
 
@@ -54,6 +56,7 @@ const makeTransactionStub = () => {
         type: string;
         title: any;
         status: string;
+        account: string;
       };
     }): Promise<{
       at: (ky: number) => { dataValues: TransactionModel };
@@ -69,7 +72,7 @@ const makeTransactionStub = () => {
 
     update(
       data: { status: string },
-      filter: { where: { _id: string } }
+      filter: { where: { _id: string; account: string } }
     ): Promise<{ dataValues: TransactionModel }> {
       return Promise.resolve({ dataValues: transactionModel });
     }
@@ -82,7 +85,7 @@ const makeTransactionStub = () => {
 
     async sum(
       property: string,
-      filter: { where: { status: string; type: string } }
+      filter: { where: { status: string; type: string; account: string } }
     ): Promise<number> {
       return Promise.resolve(1);
     }
@@ -108,9 +111,12 @@ describe("Sequelize TransactionRepository", () => {
     test("should call Transaction.create correctly", async () => {
       const { sut, transactionStub } = makeSut();
       const createSpy = jest.spyOn(transactionStub, "create");
-      await sut.create(transactionModel);
+      await sut.create("any_account", transactionModel);
 
-      expect(createSpy).toBeCalledWith(transactionModel);
+      expect(createSpy).toBeCalledWith({
+        ...transactionModel,
+        account: "any_account",
+      });
     });
   });
 
@@ -118,11 +124,12 @@ describe("Sequelize TransactionRepository", () => {
     test("should call Transaction.findAll correctly", async () => {
       const { sut, transactionStub } = makeSut();
       const findAllSpy = jest.spyOn(transactionStub, "findAll");
-      await sut.findById("1-1-1-1-1");
+      await sut.findById("any_account", "1-1-1-1-1");
 
       expect(findAllSpy).toBeCalledWith({
         where: {
           _id: "1-1-1-1-1",
+          account: "any_account",
         },
       });
     });
@@ -138,7 +145,7 @@ describe("Sequelize TransactionRepository", () => {
       );
 
       try {
-        await sut.findById("1-1-1-1-1");
+        await sut.findById("any_account", "1-1-1-1-1");
         expect(true).toBeFalsy();
       } catch (err: any) {
         expect(err.message).toEqual("This transaction doesn't exist.");
@@ -156,7 +163,7 @@ describe("Sequelize TransactionRepository", () => {
       };
       const { sut, transactionStub } = makeSut();
       const findAllSpy = jest.spyOn(transactionStub, "findAll");
-      await sut.find(filter);
+      await sut.find("any_account", filter);
 
       expect(findAllSpy).toBeCalledWith({
         where: {
@@ -164,6 +171,7 @@ describe("Sequelize TransactionRepository", () => {
           type: "Receipt",
           title: { [Op.or]: ["Salario", "Extra"] },
           status: "active",
+          account: "any_account",
         },
       });
     });
@@ -174,6 +182,7 @@ describe("Sequelize TransactionRepository", () => {
         type: "Receipt",
         title: ["Salario", "Extra"],
         status: "active",
+        account: "any_account",
       };
       const { sut, transactionStub } = makeSut();
       const findAllSpy = jest.spyOn(transactionStub, "findAll");
@@ -183,7 +192,7 @@ describe("Sequelize TransactionRepository", () => {
           map: (elm: { dataValues: TransactionModel }) => [transactionModel],
         })
       );
-      const result = await sut.find(filter);
+      const result = await sut.find("any_account", filter);
 
       expect(result).toEqual([]);
     });
@@ -193,10 +202,11 @@ describe("Sequelize TransactionRepository", () => {
         amount: ["1", "3"],
         type: "Receipt",
         title: ["Salario", "Extra"],
+        account: "any_account",
       };
       const { sut, transactionStub } = makeSut();
       const findAllSpy = jest.spyOn(transactionStub, "findAll");
-      await sut.find(filter);
+      await sut.find("any_account", filter);
 
       expect(findAllSpy).toBeCalledWith({
         where: {
@@ -204,6 +214,7 @@ describe("Sequelize TransactionRepository", () => {
           type: "Receipt",
           title: { [Op.or]: ["Salario", "Extra"] },
           status: { [Op.not]: "deleted" },
+          account: "any_account",
         },
       });
     });
@@ -214,10 +225,11 @@ describe("Sequelize TransactionRepository", () => {
         type: "Receipt",
         title: ["Salario", "Extra"],
         status: "deleted",
+        account: "any_account",
       };
       const { sut, transactionStub } = makeSut();
       const findAllSpy = jest.spyOn(transactionStub, "findAll");
-      await sut.find(filter);
+      await sut.find("any_account", filter);
 
       expect(findAllSpy).toBeCalledWith({
         where: {
@@ -225,6 +237,7 @@ describe("Sequelize TransactionRepository", () => {
           type: "Receipt",
           title: { [Op.or]: ["Salario", "Extra"] },
           status: { [Op.not]: "deleted" },
+          account: "any_account",
         },
       });
     });
@@ -245,14 +258,15 @@ describe("Sequelize TransactionRepository", () => {
           status: "active",
         })
       );
-      await sut.revert("1-1-1-1-1");
+      await sut.revert("any_account", "1-1-1-1-1");
 
-      expect(findByIdSpy).toBeCalledWith("1-1-1-1-1");
+      expect(findByIdSpy).toBeCalledWith("any_account", "1-1-1-1-1");
       expect(updateSpy).toBeCalledWith(
         { status: "reverted" },
         {
           where: {
             _id: "1-1-1-1-1",
+            account: "any_account",
           },
         }
       );
@@ -272,14 +286,15 @@ describe("Sequelize TransactionRepository", () => {
           status: "reverted",
         })
       );
-      await sut.revert("1-1-1-1-1");
+      await sut.revert("any_account", "1-1-1-1-1");
 
-      expect(findByIdSpy).toBeCalledWith("1-1-1-1-1");
+      expect(findByIdSpy).toBeCalledWith("any_account", "1-1-1-1-1");
       expect(updateSpy).toBeCalledWith(
         { status: "active" },
         {
           where: {
             _id: "1-1-1-1-1",
+            account: "any_account",
           },
         }
       );
@@ -290,13 +305,13 @@ describe("Sequelize TransactionRepository", () => {
     test("should call Transaction.sum correctly", async () => {
       const { sut, transactionStub } = makeSut();
       const updateSpy = jest.spyOn(transactionStub, "sum");
-      const { amount } = await sut.get();
+      const { amount } = await sut.get("any_account");
 
       expect(updateSpy).toBeCalledWith("amount", {
-        where: { status: "active", type: "Receipt" },
+        where: { status: "active", type: "Receipt", account: "any_account" },
       });
       expect(updateSpy).toHaveBeenLastCalledWith("amount", {
-        where: { status: "active", type: "Payment" },
+        where: { status: "active", type: "Payment", account: "any_account" },
       });
       expect(amount).toEqual("0");
     });
@@ -306,13 +321,14 @@ describe("Sequelize TransactionRepository", () => {
     test("should call Transaction.update correctly", async () => {
       const { sut, transactionStub } = makeSut();
       const updateSpy = jest.spyOn(transactionStub, "update");
-      await sut.delete("1-1-1-1-1");
+      await sut.delete("any_account", "1-1-1-1-1");
 
       expect(updateSpy).toBeCalledWith(
         { status: "deleted" },
         {
           where: {
             _id: "1-1-1-1-1",
+            account: "any_account",
           },
         }
       );

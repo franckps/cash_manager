@@ -9,4 +9,5 @@ export interface TransactionModel {
   title: string;
   description?: string;
   status: TransactionStatusModel;
+  account?: string;
 }
