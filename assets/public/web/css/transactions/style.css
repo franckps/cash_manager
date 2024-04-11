@@ -51,10 +51,9 @@
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
-    text-align: center;
+    text-align: left;
     color: #aaa;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem;
 }
 
 .transaction-list .header .header-columns p span {
@@ -87,7 +86,7 @@
     border-bottom: 1px solid #ccc;
     background-color: rgba(245, 245, 245, 1);
     opacity: .8;
-    border-radius: 4px;
+    border-radius: 2px;
     margin-top: 8px;
 }
 .content .content-item.reverted {
@@ -101,39 +100,38 @@
 }
 .content .content-item p {
     flex: 1;
+    box-sizing: border-box;
     position: relative;
     overflow: hidden;
     white-space: nowrap;
-    text-align: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    text-align: left;
+    padding: 1rem;
     background-color: transparent;
 }
 .content .content-item.payment {
-    border-left: 3px solid #f00;
+    border-left: 5px solid #f88;
 }
 .content .content-item p .payment {
     padding: .3rem .5rem;
     border: 1px solid #f00;
     border-radius: 4px;
-    background-color: #fdd;
-    color: #f00;
+    background-color: transparent;
 }
 .content .content-item.receipt {
-    border-left: 3px solid #090;
+    border-left: 5px solid #3b3;
 }
 .content .content-item p .receipt {
     padding: .3rem .5rem;
     border: 1px solid #090;
     border-radius: 4px;
-    background-color: #dfd;
-    color: #090;
+    background-color: transparent;
 }
 .btn-section {
     display: inline-flex;
     flex-direction: column;
     height: 5rem;
     cursor: pointer;
+    text-align: center !important;
 }
 .btn-section.hidden::after {
     content: "...";
@@ -212,6 +210,19 @@
     height: 0;
     width: 0;
     z-index: -1;
+}
+
+.content .col1 {
+    font-weight: bold;
+}
+.col1 {
+    flex: 2 !important;
+}
+.col4 {
+    display: none;
+    visibility: hidden;
+    width: 0;
+    float: left;
 }
 
 @media screen and (width < 840px) {
