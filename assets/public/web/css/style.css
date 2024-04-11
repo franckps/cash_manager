@@ -24,6 +24,13 @@ main section article {
     padding: 1rem 1.5rem;
     border-radius: 4px;
     box-shadow: 0 0 15px #bbb;
+    border-bottom: 5px solid #ccc;
+}
+main section article.negative {
+    border-bottom: 5px solid #f88;
+}
+main section article.positive {
+    border-bottom: 5px solid #3b3;
 }
 main section article .value {
     opacity: .5;

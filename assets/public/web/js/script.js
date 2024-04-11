@@ -40,7 +40,13 @@ const accountData = {
   },
   generateAccountList: function (account) {
     return `<a href="/web/transactions?account=${account.account}">
-        <article>
+        <article class="${
+          account.totalValue < 0
+            ? "negative"
+            : account.totalValue > 0
+            ? "positive"
+            : "zero"
+        }">
                 <h3>${account.title}</h3>
                 <p>${account.account}</p>
                 <span class="value">${formatAmount(account.totalValue)}</span>
