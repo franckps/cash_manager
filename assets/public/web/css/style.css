@@ -38,3 +38,10 @@ main section article .value {
 main section article:hover {
     box-shadow: 0 0 7px #bbb;
 }
+
+@media screen and (width < 720px) {
+    main section {
+        justify-content: center;
+        align-items: center;
+    }
+}
